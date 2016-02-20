@@ -6,12 +6,27 @@
 package block;
 
 /**
- *
+ * Class to represent the L Block in Tetris
  * @author Tyler
  */
 public class LBlock extends Block
 {
     
+    /**
+     * No-args Constructor for the L Tetris Block
+     * Makes blocks with the below shape
+     * 0 0 0 0
+     * 0 0 0 1
+     * 0 1 1 1
+     * 0 0 0 0
+     */
+    public LBlock()
+    {
+        fulcrum = new Tetrimino();
+        fulcrum.setLeft(new Tetrimino());
+        fulcrum.setRight(new Tetrimino());
+        fulcrum.getRight().setUp(new Tetrimino());
+    }
 
     
 }

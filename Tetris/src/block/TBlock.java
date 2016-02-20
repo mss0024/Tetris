@@ -6,11 +6,26 @@
 package block;
 
 /**
- *
+ * Class to represent the T Block in Tetris
  * @author Tyler
  */
 public class TBlock extends Block
 {
     
+    /**
+     * No-args Constructor for the T Tetris Block
+     * Makes blocks with the below shape
+     * 0 0 0 0
+     * 0 0 1 0
+     * 0 1 1 1
+     * 0 0 0 0
+     */
+    public TBlock()
+    {
+        fulcrum = new Tetrimino();
+        fulcrum.setUp(new Tetrimino());
+        fulcrum.setLeft(new Tetrimino());
+        fulcrum.setRight(new Tetrimino());
+    }
     
 }
