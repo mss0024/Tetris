@@ -24,5 +24,69 @@ public class Tetrimino extends Block
     public Tetrimino(){
         
     }
-    
+    /**
+     * Gets the Tetrimino to the left of this
+     * @return The left Tetrimino
+     */
+    public Tetrimino getLeft()
+    {
+        return left;
+    }
+    /**
+     * Gets the Tetrimino to the right of this
+     * @return The right Tetrimino
+     */
+    public Tetrimino getRight()
+    {
+        return right;
+    }
+    /**
+     * Gets the Tetrimino to above of this
+     * @return The Tetrimino above
+     */
+    public Tetrimino getUp()
+    {
+        return up;
+    }
+    /**
+     * Gets the Tetrimino
+     * @return The Tetrimino below
+     */
+    public Tetrimino getDown()
+    {
+        return down;
+    }
+    /**
+     * Sets the Tetrimino to the left of this
+     * @param newLeft The Tetrimino to be set to left
+     */
+    public void setLeft(Tetrimino newLeft)
+    {
+        left = newLeft;
+    }
+    /**
+     * Sets the Tetrimino to the Right of this
+     * @param newRight The Tetrimino to be set to right
+     */
+    public void setRight(Tetrimino newRight)
+    {
+        right = newRight;
+    }
+    /**
+     * Sets the Tetrimino above this
+     * @param newUp The Tetrimino to be set to up
+     */
+    public void setUp(Tetrimino newUp)
+    {
+        up = newUp;
+    }
+    /**
+     * Sets the Tetrimino below of this
+     * @param newDown The Tetrimino to be set to down
+     */
+    public void setDown(Tetrimino newDown)
+    {
+        down = newDown;
+    }
 }
+
