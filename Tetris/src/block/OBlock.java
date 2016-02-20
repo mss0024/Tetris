@@ -11,11 +11,6 @@ package block;
  */
 public class OBlock extends Block
 {
-    
-    @Override
-    public void rotate()
-    {
-        
-    }
+
     
 }

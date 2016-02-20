@@ -5,15 +5,24 @@
  */
 package block;
 
+import java.awt.Color;
+
 /**
- *
+ * This class is the Base Tetrimino that makes up all Tetris blocks
+ * 
  * @author Tyler
  */
 public class Tetrimino extends Block
 {
-    @Override
-    public void rotate()
-    {
+
+    private Tetrimino left = null;      // Tetrimino to the left
+    private Tetrimino right = null;     // Tetrimino to the right
+    private Tetrimino up = null;        // Tetrimino above
+    private Tetrimino down = null;      // Tetrimino below
+    private Color color = null;         // Color of Tetrimino 
+    
+    public Tetrimino(){
         
     }
+    
 }

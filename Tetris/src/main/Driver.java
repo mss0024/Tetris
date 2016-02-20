@@ -38,7 +38,8 @@ public class Driver extends JApplet {
             @Override
             public void run() {
                 try {
-                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+                    UIManager.setLookAndFeel(
+                            "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
                 } catch (Exception e) {
                 }
                 
@@ -62,7 +63,8 @@ public class Driver extends JApplet {
     @Override
     public void init() {
         fxContainer = new JFXPanel();
-        fxContainer.setPreferredSize(new Dimension(JFXPANEL_WIDTH_INT, JFXPANEL_HEIGHT_INT));
+        fxContainer.setPreferredSize(new Dimension(JFXPANEL_WIDTH_INT,
+                JFXPANEL_HEIGHT_INT));
         add(fxContainer, BorderLayout.CENTER);
         // create JavaFX scene
         Platform.runLater(new Runnable() {

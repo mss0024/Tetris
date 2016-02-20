@@ -12,10 +12,5 @@ package block;
 public class SBlock extends Block
 {
     
-    @Override
-    public void rotate()
-    {
-        
-    }
     
 }

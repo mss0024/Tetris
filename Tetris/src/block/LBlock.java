@@ -12,10 +12,6 @@ package block;
 public class LBlock extends Block
 {
     
-    @Override
-    public void rotate()
-    {
-        
-    }
+
     
 }

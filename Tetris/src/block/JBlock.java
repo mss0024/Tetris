@@ -11,11 +11,6 @@ package block;
  */
 public class JBlock extends Block
 {
-    
-    @Override
-    public void rotate()
-    {
-        
-    }
+
     
 }

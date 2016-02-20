@@ -11,11 +11,6 @@ package block;
  */
 public class ZBlock extends Block
 {
-    
-    @Override
-    public void rotate()
-    {
-        
-    }
+
     
 }
