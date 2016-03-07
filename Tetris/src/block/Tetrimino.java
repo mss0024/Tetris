@@ -12,7 +12,7 @@ import java.awt.Color;
  * 
  * @author Tyler
  */
-public class Tetrimino extends Block
+public class Tetrimino extends Block implements TBProperties
 {
 
     private Tetrimino left = null;      // Tetrimino to the left
@@ -21,8 +21,8 @@ public class Tetrimino extends Block
     private Tetrimino down = null;      // Tetrimino below
     private Color color = null;         // Color of Tetrimino 
     
-    public Tetrimino(){
-        
+    public Tetrimino(Color newColor){
+        color = newColor;
     }
     /**
      * Gets the Tetrimino to the left of this
@@ -88,5 +88,10 @@ public class Tetrimino extends Block
     {
         down = newDown;
     }
+    
+    public void draw(){
+        
+    }
+   
 }
 
