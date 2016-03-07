@@ -6,6 +6,7 @@
 package block;
 
 import java.awt.Color;
+import java.awt.Point;
 /**
  *
  * @author Tyler
@@ -21,6 +22,8 @@ public class Block
      new Color(30, 144, 255),   // Deep Sky Blue
      new Color(106, 90, 205),   // Slate Blue
      new Color(255, 192, 203)}; // Pink
+    Point location;
+    enum TetrisPiece {}
     /**
      * Rotates the block 90 degrees in a clockwise direction.
      * @param rotationFulcrum The Tetrimino that is currently having it's outer connecting Tetriminos rotated
