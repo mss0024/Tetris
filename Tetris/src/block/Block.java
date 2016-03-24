@@ -11,19 +11,69 @@ import java.awt.Point;
  *
  * @author Tyler
  */
-public class Block 
+public class Block implements TBProperties
 {
     protected Tetrimino fulcrum = null;
-    protected static final Color[] COLORS = 
-    {new Color(255, 99, 71),    // Tomato Red
-     new Color(255, 215, 0),    // Gold
-     new Color(173, 255, 47),   // Green-Yellow
-     new Color(32, 178, 170),   // Light Sea Green
-     new Color(30, 144, 255),   // Deep Sky Blue
-     new Color(106, 90, 205),   // Slate Blue
-     new Color(255, 192, 203)}; // Pink
-    Point location;
-    enum TetrisPiece {}
+    
+    public Block(int color, int shape){
+        
+        switch(shape){
+            case 0: // S-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setRight(new Tetrimino(colorList[color]));
+                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum.getDown()
+                        .setLeft(new Tetrimino(colorList[color]));
+                break;
+            case 1: // L-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setRight(new Tetrimino(colorList[color]));
+                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum.getLeft()
+                        .setDown(new Tetrimino(colorList[color]));
+                break;
+            case 2: // O-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum.getDown()
+                        .setLeft(new Tetrimino(colorList[color]));
+                break;
+            case 3: // T-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum.setRight(new Tetrimino(colorList[color]));
+                fulcrum.setDown(new Tetrimino(colorList[color]));
+                break;
+            case 4: // Z-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum.getDown()
+                        .setRight(new Tetrimino(colorList[color]));
+                break;
+            case 5: // J-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum.setRight(new Tetrimino(colorList[color]));
+                fulcrum.getRight()
+                        .setDown(new Tetrimino(colorList[color]));
+                break;
+            case 6: // I-Block
+                fulcrum = new Tetrimino(colorList[color]);
+                fulcrum.setRight(new Tetrimino(colorList[color]));
+                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum.getLeft()
+                        .setLeft(new Tetrimino(colorList[color]));
+                break;
+        }
+        
+    }
+    
+    
+    
+    
+    
     /**
      * Rotates the block 90 degrees in a clockwise direction.
      * @param rotationFulcrum The Tetrimino that is currently having it's outer connecting Tetriminos rotated
@@ -45,4 +95,41 @@ public class Block
             rotate(rotationFulcrum.getRight());
         
     }
+    
+    
+    public void update(){
+        
+    }
+    public void draw(){
+        
+    }
+    
+    public boolean boundCheck(){
+        return true;
+    }
+    public boolean collisionCheck(Tetrimino t){
+        
+        return false;
+    }
+    
+    public void movePiece(){
+        
+    }
+    
+    public void dropPiece(){
+        
+    }
+    
+    
+    
+    
+    
+    
+    public static void main(String [] args){
+        
+              
+        
+        
+    }
+    
 }
