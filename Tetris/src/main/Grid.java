@@ -10,18 +10,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
+ * This is the table we use for the Tetris game board
+ * Holds the Tetriminos
  * @author Tyler
  */
 public class Grid {
     
-ArrayList<ArrayList<Tetrimino>> grid = null;
+private ArrayList<ArrayList<Tetrimino>> grid = null; // the grid as a 2-D ArrayList
 
+/**
+ * No-args constructor for the Grid class
+ */
 public Grid(){
     grid = new ArrayList<>();
     initializeGrid(grid);
 }
 
+/**
+ * Initializes initial grid values to null (no tetriminos)
+ * @param grid  2-D Tetrimino Array List we are initializing 
+ */
 private static void initializeGrid(ArrayList<ArrayList<Tetrimino>> grid){
     for (int i = 0; i < 20; i++){
         ArrayList<Tetrimino> oneRow = new ArrayList<>();
@@ -33,19 +41,35 @@ private static void initializeGrid(ArrayList<ArrayList<Tetrimino>> grid){
     }    
 }
 
-private static void printTable(ArrayList<ArrayList<Tetrimino>> grid) {
-        for (int row = 0; row != 10; row++) {
-            for (int col = 0; col != 10; col++) {
-                System.out.println("Printing:               row= "+ row+ ", column= "+ col);
-                System.out.println(grid.get(row).get(col));
-            }
+/**
+ * Check to see if the rows of the grid are full
+ * If a row is full, then we will call the clearRow function
+ * @param grid  2-D Tetrimino Array List we are searching
+ */
+public static void checkIfRowFull(ArrayList<ArrayList<Tetrimino>> grid){
+    for (int rowNum = 0; rowNum < 20; rowNum++){
+        ArrayList<Tetrimino> oneRow = grid.get(rowNum);
+        for(int colNum = 0; colNum < 10; colNum++){
+            if(oneRow.get(colNum) == null)
+                break;
+            if(colNum == 9 && oneRow.get(colNum) != null)
+                clearRow(rowNum, grid);
         }
-        System.out.println("\n");
     }
+}
 
-public static void main(String[] args){
-    Grid g = new Grid();
-    Grid.printTable(g.grid);
+/**
+ * Clears the given row of the ArrayList and adds a replacement row to the top
+ * @param rowNum    row Number of the grid we are deleting
+ * @param grid      grid we are deleting and adding to
+ */
+public static void clearRow(int rowNum, ArrayList<ArrayList<Tetrimino>> grid){
+    grid.remove(rowNum);
+    ArrayList<Tetrimino> oneRow = new ArrayList<Tetrimino>();
+    for(int colNum = 0; colNum < 10; colNum++){
+        oneRow.add(colNum, null);
+    }
+    grid.add(0, oneRow);
 }
 
 }
