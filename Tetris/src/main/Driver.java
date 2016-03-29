@@ -5,90 +5,98 @@
  */
 package main;
 
-import java.awt.BorderLayout;
+import javax.swing.SpringLayout;
+import java.awt.Container;
 import java.awt.Dimension;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javax.swing.JApplet;
+import java.awt.Insets;
+import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+
+
 
 /**
  *
- * @author Tyler
+ * @author Mitch
  */
-public class Driver extends JApplet {
+public class Driver {
     
-    private static final int JFXPANEL_WIDTH_INT = 300;
-    private static final int JFXPANEL_HEIGHT_INT = 250;
-    private static JFXPanel fxContainer;
+    private static void createAndShowGUI() {
+        //creating the window
+        //Making a new JFrame and setting the title bar to "Tetris!"
+        JFrame frame = new JFrame("Tetris!");
+        //setting the action for when the user presses the X in the to right and setting it as closing the JFrame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //creating the pane
+        //getting the contentPane already in the JFrame
+        Container contentPane = frame.getContentPane();
+        //making a new springLayout
+        SpringLayout layout = new SpringLayout();
+        //setting the layout to the SpringLayout
+        contentPane.setLayout(layout);
+        frame.setSize(new Dimension(700,700));
+        Insets frameInsets = frame.getInsets();
+        int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
+        int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
+        contentPane.setSize(paneHeight, paneWidth);
+        //all the buttons that will be on screen
+        JButton startTetris = new JButton("Play Tetris");
+        JButton openOptions = new JButton("Options");
+        JButton quitGame = new JButton("Quit");
+        int buttonWidth = 200;
+        int buttonHight = 30;
+        
+        startTetris.setPreferredSize(new Dimension(buttonWidth, buttonHight));
+        openOptions.setPreferredSize(new Dimension(buttonWidth, buttonHight));
+        quitGame.setPreferredSize(new Dimension(buttonWidth, buttonHight));
+        
+        //setting action listeners
+        
+        
+        
+        
+        
+        //putting stuff on the pane and positioning
+        contentPane.add(startTetris);
+        contentPane.add(openOptions);
+        contentPane.add(quitGame);
+        
+        
+        ArrayList<JButton> menuButtons = new ArrayList();
+        menuButtons.add(startTetris);
+        menuButtons.add(openOptions);
+        menuButtons.add(quitGame);
+        //this statement basically says we are going to put the west(left) side of the startTetris object
+        // 100 pixels away from the west(left) side of the contentPane
+        System.out.println();
+        layout.putConstraint(SpringLayout.WEST, menuButtons.get(0), contentPane.getWidth()/2 - buttonWidth/2, SpringLayout.WEST, contentPane);
+        layout.putConstraint(SpringLayout.NORTH, menuButtons.get(0), 20, SpringLayout.NORTH, contentPane);
+        for(int i=1;i<menuButtons.size();i++)
+        {
+            layout.putConstraint(SpringLayout.WEST, menuButtons.get(i), 0, SpringLayout.WEST, menuButtons.get(0));
+            layout.putConstraint(SpringLayout.NORTH, menuButtons.get(i), 10, SpringLayout.SOUTH, menuButtons.get(i-1));
+        }
+        
+        
+        
+        //get set the frame size in relation to the components in it
+        //frame.pack();
+        //saying which frame is currently visible
+        frame.setVisible(true);
+   }
+    
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                try {
-                    UIManager.setLookAndFeel(
-                            "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-                } catch (Exception e) {
-                }
-                
-                JFrame frame = new JFrame("JavaFX 2 in Swing");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                JApplet applet = new Driver();
-                applet.init();
-                
-                frame.setContentPane(applet.getContentPane());
-                
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                
-                applet.start();
+                createAndShowGUI();
             }
         });
-    }
-    
-    @Override
-    public void init() {
-        fxContainer = new JFXPanel();
-        fxContainer.setPreferredSize(new Dimension(JFXPANEL_WIDTH_INT,
-                JFXPANEL_HEIGHT_INT));
-        add(fxContainer, BorderLayout.CENTER);
-        // create JavaFX scene
-        Platform.runLater(new Runnable() {
-            
-            @Override
-            public void run() {
-                createScene();
-            }
-        });
-    }
-    
-    private void createScene() {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        fxContainer.setScene(new Scene(root));
     }
     
 }
