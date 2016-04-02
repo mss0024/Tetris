@@ -7,6 +7,7 @@ package block;
 
 import java.awt.Color;
 import java.awt.Point;
+import main.Grid;
 /**
  *
  * @author Tyler
@@ -14,6 +15,7 @@ import java.awt.Point;
 public class Block implements TBProperties
 {
     protected Tetrimino fulcrum = null;
+    private static Grid grid;
     
     public Block(int color, int shape){
         
@@ -70,13 +72,14 @@ public class Block implements TBProperties
         
     }
     
-    
+    /**
     
     
     
     /**
      * Rotates the block 90 degrees in a clockwise direction.
-     * @param rotationFulcrum The Tetrimino that is currently having it's outer connecting Tetriminos rotated
+     * @param rotationFulcrum The Tetrimino that is currently having 
+     *                        it's outer connecting Tetriminos rotated
      */
     public void rotate(Tetrimino rotationFulcrum)
     {
@@ -96,27 +99,53 @@ public class Block implements TBProperties
         
     }
     
-    
+    /**
+     * Function to loop through the block placement
+     */
     public void update(){
         
     }
+    
+    /**
+     * Function to draw the block on the GUI
+     */
     public void draw(){
         
     }
     
-    public boolean boundCheck(){
+    /**
+     * Check to make sure that the Tetrimino is still in the grid
+     * @param t the tetrimino we are checking 
+     * @return true if still in grid, false otherwise
+     */
+    public boolean boundCheck(Tetrimino t){
         return true;
     }
+    
+    /**
+     * Check to see if the tetrimino will collide with another tetrimino
+     * @param t
+     * @return 
+     */
     public boolean collisionCheck(Tetrimino t){
         
         return false;
     }
     
-    public void movePiece(){
+    /**
+     * Move the tetrimino left, right, or down
+     * @param t     tetrimino we are moving
+     * @param dir   direction that we are moving (0: left, 1: right, 2: down)
+     */
+    public void movePiece(Tetrimino t, int dir){
         
     }
     
-    public void dropPiece(){
+    /**
+     * Move the tetrimino straight down until there is a collision
+     * @param t     tetrimino we are moving
+     */
+    public void dropPiece(Tetrimino t){
         
     }
     

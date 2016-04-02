@@ -7,7 +7,6 @@ package main;
 
 import block.Tetrimino;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This is the table we use for the Tetris game board
@@ -16,7 +15,8 @@ import java.util.Arrays;
  */
 public class Grid {
     
-private ArrayList<ArrayList<Tetrimino>> grid = null; // the grid as a 2-D ArrayList
+// the grid as a 2-D ArrayList
+private ArrayList<ArrayList<Tetrimino>> grid = null;
 
 /**
  * No-args constructor for the Grid class
@@ -31,7 +31,7 @@ public Grid(){
  * @param grid  2-D Tetrimino Array List we are initializing 
  */
 private static void initializeGrid(ArrayList<ArrayList<Tetrimino>> grid){
-    for (int i = 0; i < 20; i++){
+    for (int i = 0; i < 22; i++){
         ArrayList<Tetrimino> oneRow = new ArrayList<>();
         grid.add(i, oneRow);
         
@@ -47,11 +47,11 @@ private static void initializeGrid(ArrayList<ArrayList<Tetrimino>> grid){
  * @param grid  2-D Tetrimino Array List we are searching
  */
 public static void checkIfRowFull(ArrayList<ArrayList<Tetrimino>> grid){
-    for (int rowNum = 0; rowNum < 20; rowNum++){
+    for (int rowNum = 2; rowNum < 22; rowNum++){
         ArrayList<Tetrimino> oneRow = grid.get(rowNum);
         for(int colNum = 0; colNum < 10; colNum++){
             if(oneRow.get(colNum) == null)
-                break;
+                continue;
             if(colNum == 9 && oneRow.get(colNum) != null)
                 clearRow(rowNum, grid);
         }
@@ -63,9 +63,9 @@ public static void checkIfRowFull(ArrayList<ArrayList<Tetrimino>> grid){
  * @param rowNum    row Number of the grid we are deleting
  * @param grid      grid we are deleting and adding to
  */
-public static void clearRow(int rowNum, ArrayList<ArrayList<Tetrimino>> grid){
+private static void clearRow(int rowNum, ArrayList<ArrayList<Tetrimino>> grid){
     grid.remove(rowNum);
-    ArrayList<Tetrimino> oneRow = new ArrayList<Tetrimino>();
+    ArrayList<Tetrimino> oneRow = new ArrayList<>();
     for(int colNum = 0; colNum < 10; colNum++){
         oneRow.add(colNum, null);
     }

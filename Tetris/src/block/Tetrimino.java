@@ -25,7 +25,6 @@ public class Tetrimino implements TBProperties
 
     public Tetrimino(Color newColor){
         color = newColor;
-
     }
     /**
      * Gets the Tetrimino to the left of this
@@ -92,7 +91,10 @@ public class Tetrimino implements TBProperties
         down = newDown;
     }
     
-    
+    /**
+     * Function to draw the individual Tetrimino
+     * Not sure what to do with this yet...
+     */
     public void draw(){
         
     }
