@@ -9,7 +9,9 @@ import javax.swing.SpringLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javafx.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -53,8 +55,27 @@ public class Driver {
         
         //setting action listeners
         
-        
-        
+        startTetris.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent ae) {
+                contentPane.setVisible(false);
+                //frame.getContentPane().removeAll();
+                frame.setContentPane(new Tetris(frameInsets));
+                frame.validate();
+            }
+        });
+        openOptions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent ae) {
+                //make options and shit here
+            }
+        });
+        quitGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent ae) {
+                System.exit(0);
+            }
+        });
         
         
         //putting stuff on the pane and positioning
