@@ -5,7 +5,6 @@
  */
 package block;
 
-import java.awt.Color;
 import java.awt.Point;
 import main.Grid;
 /**
@@ -17,56 +16,56 @@ public class Block implements TBProperties
     protected Tetrimino fulcrum = null;
     private static Grid grid;
     
-    public Block(int color, int shape){
+    public Block(int shape){
         
         switch(shape){
             case 0: // S-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setRight(new Tetrimino(colorList[color]));
-                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[0]);
+                fulcrum.setRight(new Tetrimino(colorList[0]));
+                fulcrum.setDown(new Tetrimino(colorList[0]));
                 fulcrum.getDown()
-                        .setLeft(new Tetrimino(colorList[color]));
+                        .setLeft(new Tetrimino(colorList[0]));
                 break;
             case 1: // L-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setRight(new Tetrimino(colorList[color]));
-                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[1]);
+                fulcrum.setRight(new Tetrimino(colorList[1]));
+                fulcrum.setLeft(new Tetrimino(colorList[1]));
                 fulcrum.getLeft()
-                        .setDown(new Tetrimino(colorList[color]));
+                        .setDown(new Tetrimino(colorList[1]));
                 break;
             case 2: // O-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setLeft(new Tetrimino(colorList[color]));
-                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[2]);
+                fulcrum.setLeft(new Tetrimino(colorList[2]));
+                fulcrum.setDown(new Tetrimino(colorList[2]));
                 fulcrum.getDown()
-                        .setLeft(new Tetrimino(colorList[color]));
+                        .setLeft(new Tetrimino(colorList[2]));
                 break;
             case 3: // T-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setLeft(new Tetrimino(colorList[color]));
-                fulcrum.setRight(new Tetrimino(colorList[color]));
-                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[3]);
+                fulcrum.setLeft(new Tetrimino(colorList[3]));
+                fulcrum.setRight(new Tetrimino(colorList[3]));
+                fulcrum.setDown(new Tetrimino(colorList[3]));
                 break;
             case 4: // Z-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setLeft(new Tetrimino(colorList[color]));
-                fulcrum.setDown(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[4]);
+                fulcrum.setLeft(new Tetrimino(colorList[4]));
+                fulcrum.setDown(new Tetrimino(colorList[4]));
                 fulcrum.getDown()
-                        .setRight(new Tetrimino(colorList[color]));
+                        .setRight(new Tetrimino(colorList[4]));
                 break;
             case 5: // J-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setLeft(new Tetrimino(colorList[color]));
-                fulcrum.setRight(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[5]);
+                fulcrum.setLeft(new Tetrimino(colorList[5]));
+                fulcrum.setRight(new Tetrimino(colorList[5]));
                 fulcrum.getRight()
-                        .setDown(new Tetrimino(colorList[color]));
+                        .setDown(new Tetrimino(colorList[5]));
                 break;
             case 6: // I-Block
-                fulcrum = new Tetrimino(colorList[color]);
-                fulcrum.setRight(new Tetrimino(colorList[color]));
-                fulcrum.setLeft(new Tetrimino(colorList[color]));
+                fulcrum = new Tetrimino(colorList[6]);
+                fulcrum.setRight(new Tetrimino(colorList[6]));
+                fulcrum.setLeft(new Tetrimino(colorList[6]));
                 fulcrum.getLeft()
-                        .setLeft(new Tetrimino(colorList[color]));
+                        .setLeft(new Tetrimino(colorList[6]));
                 break;
         }
         

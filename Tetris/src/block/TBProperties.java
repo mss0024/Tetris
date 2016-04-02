@@ -19,13 +19,13 @@ public interface TBProperties {
     // array for the Colors of the Tetriminos
     public static final Color[] colorList=
     {
-     new Color(255, 99, 71), //Tomato Red
-     new Color(255, 215, 0), //GOLD
-     new Color(173, 255, 47), //GREEN_YELLOW
-     new Color(32, 178, 170), //SEA_GREEN
-     new Color(30, 144, 255), //SKY_BLUE
-     new Color(106, 90, 205), //SLATE_BLUE
-     new Color(255, 192, 203) //PINK
+     new Color(255, 99, 71), //Tomato Red  S-Block
+     new Color(255, 215, 0), //GOLD        L-Block
+     new Color(173, 255, 47), //GREEN_YELLOW O-Block
+     new Color(32, 178, 170), //SEA_GREEN  T-Block
+     new Color(30, 144, 255), //SKY_BLUE   Z-Block
+     new Color(106, 90, 205), //SLATE_BLUE J-Block
+     new Color(255, 192, 203) //PINK       I-Block
     };  
     
     // enum for the shape of the Block
