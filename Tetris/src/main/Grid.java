@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -74,19 +73,3 @@ private static void clearRow(int rowNum, ArrayList<ArrayList<Tetrimino>> grid){
 }
 
 }
-=======
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package main;
-
-/**
- *
- * @author Max
- */
-public class Grid {
-    
-}
->>>>>>> origin/master
