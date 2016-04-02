@@ -5,7 +5,6 @@
  */
 package block;
 
-import java.awt.Point;
 import main.Grid;
 /**
  *
@@ -103,6 +102,21 @@ public class Block implements TBProperties
      */
     public void update(){
         
+        //loop to go through block placement
+        
+            //thread sleep for x seconds
+            //to allow user to move left or right or down
+            //if the user wants to move left or right, run a collision and
+            //bounds check recursively first
+            
+            //after thread is done sleeping, check for a collision downwards
+            //if no collision, move block downwards and resume loop
+            //if there is a collision, end the block movement and the loop,
+            //get new
+        
+        
+        
+        
     }
     
     /**
@@ -137,7 +151,34 @@ public class Block implements TBProperties
      * @param dir   direction that we are moving (0: left, 1: right, 2: down)
      */
     public void movePiece(Tetrimino t, int dir){
-        
+        switch (dir){
+            
+            //Move left
+            case 0:
+                if(!collisionCheck(t) && !boundCheck(t)){
+                    t.setLeft(t);
+                    t = null;
+                }
+                break;
+            //Move right
+            case 1:
+                if(!collisionCheck(t) && !boundCheck(t)){
+                    t.setRight(t);
+                    t = null;
+                }
+                break;
+            //Move down    
+            case 2:
+                if(!collisionCheck(t) && !boundCheck(t)){
+                    t.setDown(t);
+                    t = null;
+                }
+                else{
+                    //THIS IS WHERE WE NEED TO CYCLE THROUGH THE GAME LOOP
+                }
+                break;
+                
+        }
     }
     
     /**
@@ -145,13 +186,10 @@ public class Block implements TBProperties
      * @param t     tetrimino we are moving
      */
     public void dropPiece(Tetrimino t){
-        
+        while(!collisionCheck(t)){
+            movePiece(t, 2);
+        }
     }
-    
-    
-    
-    
-    
     
     public static void main(String [] args){
         
