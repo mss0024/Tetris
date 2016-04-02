@@ -41,6 +41,7 @@ public class Driver {
         Insets frameInsets = frame.getInsets();
         int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
         int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
+        System.out.println(paneHeight + ", " + paneWidth);
         contentPane.setSize(paneHeight, paneWidth);
         //all the buttons that will be on screen
         JButton startTetris = new JButton("Play Tetris");
@@ -61,7 +62,7 @@ public class Driver {
                 contentPane.setVisible(false);
                 //frame.getContentPane().removeAll();
                 frame.setContentPane(new Tetris(frameInsets));
-                frame.validate();
+                //frame.validate();
             }
         });
         openOptions.addActionListener(new ActionListener() {
@@ -98,7 +99,6 @@ public class Driver {
             layout.putConstraint(SpringLayout.WEST, menuButtons.get(i), 0, SpringLayout.WEST, menuButtons.get(0));
             layout.putConstraint(SpringLayout.NORTH, menuButtons.get(i), 10, SpringLayout.SOUTH, menuButtons.get(i-1));
         }
-        
         
         
         //get set the frame size in relation to the components in it
