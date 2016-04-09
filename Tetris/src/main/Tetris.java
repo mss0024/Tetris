@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.SpringLayout;
 import block.*;
 import block.TBProperties.Shape;
+import java.awt.Point;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
@@ -26,6 +27,7 @@ import java.util.Random;
  */
 public class Tetris extends Container{
     //tetriminos 25x25
+    /*
     public void paint(Graphics g) {
         g.fillRoundRect(90,90,270,520,20,20);
         g.fillRoundRect(365,90,125,125,20,20);
@@ -35,6 +37,7 @@ public class Tetris extends Container{
         
         this.paintComponents(g);
     }
+*/
     public Tetris(Insets in)
     {
         this.setPreferredSize(new Dimension(700-in.left-in.right,700-in.top-in.bottom));
@@ -60,20 +63,36 @@ public class Tetris extends Container{
         
         
         
-        //start game here
+        this.setVisible(true);
+        
+        
+        Graphics g = this.getGraphics();
+        
+        g.fillRoundRect(90,90,270,520,20,20);
+        g.fillRoundRect(365,90,125,125,20,20);
+        g.setColor(this.getBackground());
+        g.fillRect(100,100,250,500);
+        g.fillRect(375,100,105,105);
+        
+        this.paintComponents(g);
+        
+        
         
         Random rnd = new Random();
-        
         Block current = new Block(rnd.nextInt(7));
         Block next = new Block(rnd.nextInt(7));
         
+        next.draw(this.getGraphics(), next.getFulcrum(), new Point(530,155));
+        
+        //start game here
         
         
         
         
-        this.setVisible(true);
         
     }
+    
+    
     @Override
     public String toString()
     {
