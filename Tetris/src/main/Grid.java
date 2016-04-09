@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,6 +26,13 @@ public class Grid {
         initializeGrid(grid);
     }
 
+    /** Accessor
+     * @return return madness
+     */
+    public ArrayList<ArrayList<Tetrimino>> getGrid(){
+        return grid;
+    }
+    
     /**
      * Initializes initial grid values to null (no tetriminos)
      * @param grid  2-D Tetrimino Array List we are initializing 

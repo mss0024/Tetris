@@ -5,6 +5,11 @@
  */
 package block;
 
+<<<<<<< HEAD
+
+import java.awt.Point;
+=======
+>>>>>>> master
 import java.awt.Color;
 import java.awt.Graphics;
 import main.Grid;
@@ -17,10 +22,15 @@ public class Block implements TBProperties
     protected Tetrimino fulcrum = null;
     private String whatShape;
     private static Grid grid;
+<<<<<<< HEAD
+    Point position = null;
+=======
    
+>>>>>>> master
     
     public Block(int shape){
         
+        position = new Point(0, 5);
         switch(shape){
             case 0: // S-Block
                 fulcrum = new Tetrimino(colorList[0]);
@@ -92,6 +102,8 @@ public class Block implements TBProperties
      */
     public void rotate(Tetrimino rotationFulcrum)
     {
+        // MAKE A COPY OF THE BLASCK AND PASS IT OT THIS METHOD TO CHECK AND THEN
+        // IF IT IS VALID THEN CALL IT AGASIN ON THE ORIGINAL BLCOK
         Tetrimino temp = rotationFulcrum.getUp();           //setting temp to store a tet
         rotationFulcrum.setUp(rotationFulcrum.getLeft());   //moving the blocks clockwise
         rotationFulcrum.setLeft(rotationFulcrum.getDown());
@@ -147,22 +159,48 @@ public class Block implements TBProperties
     
     /**
      * Check to make sure that the Tetrimino is still in the grid
-     * @param t the tetrimino we are checking 
+     * @param t the tetrimino we are checking
+     * @param p the position point on the grid for the tetrimino we are checking
      * @return true if still in grid, false otherwise
      */
-    public boolean boundCheck(Tetrimino t){
-        return true;
+    public boolean boundCheck(Tetrimino t, Point p){
+        boolean b = true;
+        if (p.x < 0 || p.x > 9)
+            return false;
+        if (p.y > 21)
+            return false;
+        if(t.getUp() != null && !boundCheck(t.getUp(),new Point(p.x,p.y-1)))
+            b = false;
+        if(t.getRight() != null && !boundCheck(t.getRight(), new Point(p.x + 1, p.y)))
+            b = false;
+        if(t.getLeft() != null && !boundCheck(t.getLeft(), new Point(p.x - 1, p.y)))
+            b = false;
+        if(t.getDown() != null && !boundCheck(t.getDown(), new Point(p.x, p.y + 1)))
+            b = false;
+        
+        return b;
     }
     
     /**
      * Check to see if the tetrimino will collide with another tetrimino
-     * @param t
+     * @param t    Tetrimino we are checking for pre-existing tetriminos in grid
+     * @param p    Point we are looking at in the grid  
      * @return 
      * 
      */
-    public boolean collisionCheck(Tetrimino t){
-        
-        return false;
+    public boolean collisionCheck(Tetrimino t, Point p){
+        boolean b = true;
+        if (grid.getGrid().get(p.y).get(p.x) != null)
+            return false;
+        if (t.getUp() != null && !collisionCheck(t.getUp(), new Point(p.x, p.y - 1)))
+            b = false;
+        if (t.getLeft() != null && !collisionCheck(t.getLeft(), new Point(p.x - 1, p.y)))
+            b = false;
+        if (t.getRight() != null && !collisionCheck(t.getRight(), new Point(p.x + 1, p.y)))
+            b = false;
+        if (t.getDown() != null && !collisionCheck(t.getDown(), new Point(p.x, p.y + 1)))
+            b = false;
+        return b;
     }
     
     /**
@@ -175,29 +213,25 @@ public class Block implements TBProperties
             
             //Move left
             case 0:
-                if(!collisionCheck(t) && !boundCheck(t)){
-                    t.setLeft(t);
-                    t = null;
-                }
+                if(collisionCheck(t, new Point(--position.x, position.y)) && 
+                        boundCheck(t, new Point(--position.x, position.y)))
+                    --position.x;
+
                 break;
             //Move right
             case 1:
-                if(!collisionCheck(t) && !boundCheck(t)){
-                    t.setRight(t);
-                    t = null;
-                }
+                if(collisionCheck(t, new Point(++position.x, position.y)) && 
+                        boundCheck(t, new Point(++position.x, position.y)))
+                    ++position.x;
+                   
                 break;
             //Move down    
             case 2:
-                if(!collisionCheck(t) && !boundCheck(t)){
-                    t.setDown(t);
-                    t = null;
-                }
-                else{
-                    //THIS IS WHERE WE NEED TO CYCLE THROUGH THE GAME LOOP
-                }
-                break;
-                
+                if(collisionCheck(t, new Point(position.x, ++position.y)) && 
+                        boundCheck(t, new Point(position.x, ++position.y)))
+                    ++position.y;
+ 
+                break;               
         }
     }
     
@@ -206,9 +240,12 @@ public class Block implements TBProperties
      * @param t     tetrimino we are moving
      */
     public void dropPiece(Tetrimino t){
-        while(!collisionCheck(t)){
+        while(collisionCheck(t, new Point(position.x, ++position.y))){
             movePiece(t, 2);
         }
+        
+        //call place piece on grid
+        
     }
     
     public static void main(String [] args){
