@@ -37,21 +37,22 @@ public class Driver {
         SpringLayout layout = new SpringLayout();
         //setting the layout to the SpringLayout
         contentPane.setLayout(layout);
-        frame.setSize(new Dimension(700,700));
+        frame.setSize(new Dimension(550,700));
         Insets frameInsets = frame.getInsets();
         int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
         int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
+        System.out.println(paneHeight + ", " + paneWidth);
         contentPane.setSize(paneHeight, paneWidth);
         //all the buttons that will be on screen
         JButton startTetris = new JButton("Play Tetris");
         JButton openOptions = new JButton("Options");
         JButton quitGame = new JButton("Quit");
         int buttonWidth = 200;
-        int buttonHight = 30;
+        int buttonHeight = 30;
         
-        startTetris.setPreferredSize(new Dimension(buttonWidth, buttonHight));
-        openOptions.setPreferredSize(new Dimension(buttonWidth, buttonHight));
-        quitGame.setPreferredSize(new Dimension(buttonWidth, buttonHight));
+        startTetris.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        openOptions.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        quitGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         
         //setting action listeners
         
@@ -61,7 +62,7 @@ public class Driver {
                 contentPane.setVisible(false);
                 //frame.getContentPane().removeAll();
                 frame.setContentPane(new Tetris(frameInsets));
-                frame.validate();
+                //frame.validate();
             }
         });
         openOptions.addActionListener(new ActionListener() {
@@ -90,15 +91,13 @@ public class Driver {
         menuButtons.add(quitGame);
         //this statement basically says we are going to put the west(left) side of the startTetris object
         // 100 pixels away from the west(left) side of the contentPane
-        System.out.println();
-        layout.putConstraint(SpringLayout.WEST, menuButtons.get(0), contentPane.getWidth()/2 - buttonWidth/2, SpringLayout.WEST, contentPane);
-        layout.putConstraint(SpringLayout.NORTH, menuButtons.get(0), 20, SpringLayout.NORTH, contentPane);
-        for(int i=1;i<menuButtons.size();i++)
-        {
+        System.out.println(contentPane.getWidth());
+        layout.putConstraint(SpringLayout.WEST, menuButtons.get(0), contentPane.getHeight()/2 - buttonWidth/2, SpringLayout.WEST, contentPane);
+        layout.putConstraint(SpringLayout.NORTH, menuButtons.get(0), contentPane.getWidth()/2 - ((3*buttonHeight)+(10*2))/2, SpringLayout.NORTH, contentPane);
+        for(int i=1;i<menuButtons.size();i++) {
             layout.putConstraint(SpringLayout.WEST, menuButtons.get(i), 0, SpringLayout.WEST, menuButtons.get(0));
             layout.putConstraint(SpringLayout.NORTH, menuButtons.get(i), 10, SpringLayout.SOUTH, menuButtons.get(i-1));
         }
-        
         
         
         //get set the frame size in relation to the components in it
