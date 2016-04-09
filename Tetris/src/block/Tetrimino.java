@@ -6,6 +6,7 @@
 package block;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * This class is the Base Tetrimino that makes up all Tetris blocks
@@ -21,10 +22,16 @@ public class Tetrimino implements TBProperties
     private Tetrimino up = null;        // Tetrimino above
     private Tetrimino down = null;      // Tetrimino below
     private Color color = null;         // Color of Tetrimino 
+    private int width = 25;
+    private int height = 25;
     
 
     public Tetrimino(Color newColor){
         color = newColor;
+    }
+    
+    public Color getColor(){
+        return color;
     }
     /**
      * Gets the Tetrimino to the left of this
@@ -95,8 +102,9 @@ public class Tetrimino implements TBProperties
      * Function to draw the individual Tetrimino
      * Not sure what to do with this yet...
      */
-    public void draw(){
-        
+    public void draw(Graphics g, int x, int y, Color c){
+       g.setColor(c);
+       g.fillRect(x-13, y-13, 25, 25);
     }
 
     
