@@ -5,8 +5,11 @@
  */
 package block;
 
+<<<<<<< HEAD
 
 import java.awt.Point;
+=======
+>>>>>>> master
 import java.awt.Color;
 import java.awt.Graphics;
 import main.Grid;
@@ -19,7 +22,11 @@ public class Block implements TBProperties
     protected Tetrimino fulcrum = null;
     private String whatShape;
     private static Grid grid;
+<<<<<<< HEAD
     Point position = null;
+=======
+   
+>>>>>>> master
     
     public Block(int shape){
         
