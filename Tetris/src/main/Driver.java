@@ -11,7 +11,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javafx.event.ActionEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -40,20 +40,22 @@ public class Driver {
         frame.setSize(new Dimension(550,700));
         Insets frameInsets = frame.getInsets();
         int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
-        int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
-        System.out.println(paneHeight + ", " + paneWidth);
+        int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;;
         contentPane.setSize(paneHeight, paneWidth);
         //all the buttons that will be on screen
-        JButton startTetris = new JButton("Play Tetris");
-        JButton openOptions = new JButton("Options");
-        JButton quitGame = new JButton("Quit");
-        int buttonWidth = 200;
+        JButton startTetris = new JButton();
+        JButton openOptions = new JButton();
+        JButton quitGame = new JButton();
+        int buttonWidth = 170;
         int buttonHeight = 30;
         
         startTetris.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         openOptions.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         
+        quitGame.setIcon(new ImageIcon(Driver.class.getResource("/images/Exit01.jpg")));
+        startTetris.setIcon(new ImageIcon(Driver.class.getResource("/images/Start01.jpg")));
+        openOptions.setIcon(new ImageIcon(Driver.class.getResource("/images/Options01.jpg")));
         //setting action listeners
         
         startTetris.addActionListener(new ActionListener() {
@@ -91,7 +93,6 @@ public class Driver {
         menuButtons.add(quitGame);
         //this statement basically says we are going to put the west(left) side of the startTetris object
         // 100 pixels away from the west(left) side of the contentPane
-        System.out.println(contentPane.getWidth());
         layout.putConstraint(SpringLayout.WEST, menuButtons.get(0), contentPane.getHeight()/2 - buttonWidth/2, SpringLayout.WEST, contentPane);
         layout.putConstraint(SpringLayout.NORTH, menuButtons.get(0), contentPane.getWidth()/2 - ((3*buttonHeight)+(10*2))/2, SpringLayout.NORTH, contentPane);
         for(int i=1;i<menuButtons.size();i++) {
@@ -106,7 +107,6 @@ public class Driver {
         frame.setVisible(true);
    }
     
-
     /**
      * @param args the command line arguments
      */

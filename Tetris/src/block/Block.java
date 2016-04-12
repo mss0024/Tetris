@@ -7,7 +7,6 @@ package block;
 
 
 import java.awt.Point;
-import java.awt.Color;
 import java.awt.Graphics;
 import main.Grid;
 /**
@@ -23,7 +22,7 @@ public class Block implements TBProperties
     
     public Block(int shape){
         
-        position = new Point(0, 5);
+        position = new Point(5, 0);
         switch(shape){
             case 0: // S-Block
                 fulcrum = new Tetrimino(colorList[0]);
@@ -137,17 +136,19 @@ public class Block implements TBProperties
     
     /**
      * Function to draw the block on the GUI
+     * @param g
+     * @param drawFulcrum
      */
-    public void draw(Graphics g, Tetrimino fulcrum, int x, int y){
-        fulcrum.draw(g, x, y, fulcrum.getColor());
-        if(fulcrum.getUp() != null)
-            draw(g,fulcrum.getUp(),x,y-25);
-        if(fulcrum.getLeft() != null)
-            draw(g,fulcrum.getLeft(),x-25,y);
-        if(fulcrum.getDown() != null)
-            draw(g,fulcrum.getDown(),x,y+25);
-        if(fulcrum.getRight() != null)
-            draw(g,fulcrum.getRight(),x+25,y);
+    public void draw(Tetrimino drawFulcrum, Point p){
+        drawFulcrum.draw( 113+(25*p.x), 113+(25*p.y));
+        if(drawFulcrum.getUp() != null)
+            draw(drawFulcrum.getUp(),new Point(p.x,p.y-1));
+        if(drawFulcrum.getLeft() != null)
+            draw(drawFulcrum.getLeft(),new Point(p.x-1,p.y));
+        if(drawFulcrum.getDown() != null)
+            draw(drawFulcrum.getDown(),new Point(p.x,p.y+1));
+        if(drawFulcrum.getRight() != null)
+            draw(drawFulcrum.getRight(),new Point(p.x+1,p.y));
     }
     
     /**
@@ -242,10 +243,14 @@ public class Block implements TBProperties
     }
     
     public static void main(String [] args){
-        
-              
-        
-        
+                
+    }
+    public Point getPosition(){
+        return position;
+    }
+    
+    public Tetrimino getFulcrum(){
+        return fulcrum;
     }
     
     @Override

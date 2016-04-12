@@ -13,11 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SpringLayout;
 import block.*;
+import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -28,22 +30,30 @@ public class Tetris extends Container implements KeyListener{
     Block current = new Block(rnd.nextInt(7));
     Block next = new Block(rnd.nextInt(7));
     boolean updatePaint = true;
-    
+    Image backGroundImage;
     //tetriminos 25x25
     @Override
     public void paint(Graphics g) {
+        g.drawImage(backGroundImage, 0, 0, null);
+        
         g.fillRoundRect(90,90,270,520,20,20);
         g.fillRoundRect(362,90,125,125,20,20);
         g.setColor(this.getBackground());
         g.fillRect(100,100,250,500);
         g.fillRect(372,100,105,105);
-        current.draw(g, current.getFulcrum(), current.getPosition());
-        next.draw(g, next.getFulcrum(), new Point(13,2));
         
         this.paintComponents(g);
     }
     public Tetris(Insets in)
     {
+        try{
+            backGroundImage = ImageIO.read(new File("images\\main04.jpg"));
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Fail");
+        }
         this.setPreferredSize(new Dimension(700-in.left-in.right,700-in.top-in.bottom));
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
@@ -51,6 +61,7 @@ public class Tetris extends Container implements KeyListener{
         JButton quitGame = new JButton("Exit");
         JLabel linesCleared = new JLabel("Lines Cleared: 0");
         JLabel score = new JLabel("Score: 0");
+        
         
         
         this.add(quitGame);
@@ -92,7 +103,7 @@ public class Tetris extends Container implements KeyListener{
         if(ke.getKeyCode() == 37){
             current.getPosition().x--;
             System.out.println(this.getGraphics());
-            current.draw(this.getGraphics(), current.getFulcrum(), current.getPosition());
+            current.draw(current.getFulcrum(), current.getPosition());
         }
     }
 
@@ -110,7 +121,7 @@ public class Tetris extends Container implements KeyListener{
                     break;
                 case KeyEvent.VK_LEFT:
                     current.getPosition().x--;
-                    current.draw(this.getGraphics(), current.getFulcrum(), current.getPosition());
+                    current.draw(current.getFulcrum(), current.getPosition());
                     break;
                 case KeyEvent.VK_RIGHT :
                     // handle right
@@ -127,7 +138,7 @@ public class Tetris extends Container implements KeyListener{
         if(ke.getKeyCode() == 37){
             current.getPosition().x--;
             System.out.println(this.getGraphics());
-            current.draw(this.getGraphics(), current.getFulcrum(), current.getPosition());
+            current.draw(current.getFulcrum(), current.getPosition());
         }
     }
 }

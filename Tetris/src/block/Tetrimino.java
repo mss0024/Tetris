@@ -6,7 +6,8 @@
 package block;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * This class is the Base Tetrimino that makes up all Tetris blocks
@@ -22,12 +23,18 @@ public class Tetrimino implements TBProperties
     private Tetrimino up = null;        // Tetrimino above
     private Tetrimino down = null;      // Tetrimino below
     private Color color = null;         // Color of Tetrimino 
-    private int width = 25;
-    private int height = 25;
+    private final int width = 25;
+    private final int height = 25;
+    JLabel label;
     
 
     public Tetrimino(Color newColor){
+        if(color == colorList[1])
+        {
+            
+        }
         color = newColor;
+        label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T01.jpg")));
     }
     
     public Color getColor(){
@@ -101,10 +108,11 @@ public class Tetrimino implements TBProperties
     /**
      * Function to draw the individual Tetrimino
      * Not sure what to do with this yet...
+     * @param x
+     * @param y
      */
-    public void draw(Graphics g, int x, int y, Color c){
-       g.setColor(c);
-       g.fillRect(x-13, y-13, 25, 25);
+    public void draw(int x, int y){
+       label.setLocation(x,y);
     }
 
     
