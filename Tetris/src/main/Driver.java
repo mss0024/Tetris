@@ -21,9 +21,9 @@ import javax.swing.JFrame;
  *
  * @author Mitch
  */
-public class Driver {
+public class Driver{
     
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI(){
         //creating the window
         //Making a new JFrame and setting the title bar to "Tetris!"
         JFrame frame = new JFrame("Tetris!");
@@ -40,7 +40,7 @@ public class Driver {
         frame.setSize(new Dimension(550,700));
         Insets frameInsets = frame.getInsets();
         int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
-        int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;;
+        int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
         contentPane.setSize(paneHeight, paneWidth);
         //all the buttons that will be on screen
         JButton startTetris = new JButton();
@@ -118,5 +118,4 @@ public class Driver {
             }
         });
     }
-    
 }

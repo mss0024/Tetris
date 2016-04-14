@@ -6,8 +6,10 @@
 package block;
 
 import java.awt.Color;
+import java.awt.Container;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SpringLayout;
 
 /**
  * This class is the Base Tetrimino that makes up all Tetris blocks
@@ -25,16 +27,43 @@ public class Tetrimino implements TBProperties
     private Color color = null;         // Color of Tetrimino 
     private final int width = 25;
     private final int height = 25;
-    JLabel label;
+    private JLabel label = null;
+    private SpringLayout layout;
+    private Container pane;
     
 
-    public Tetrimino(Color newColor){
-        if(color == colorList[1])
-        {
-            
+    public Tetrimino(Color newColor, Container c, SpringLayout l){
+        if(newColor == colorList[0]){
+            color = colorList[0];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T06.jpg")));
         }
-        color = newColor;
-        label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T01.jpg")));
+        if(newColor == colorList[1]){
+            color = colorList[1];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T01.jpg")));
+        }
+        if(newColor == colorList[2]){
+            color = colorList[2];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T04.jpg")));
+        }
+        if(newColor == colorList[3]){
+            color = colorList[3];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T07.jpg")));
+        }
+        if(newColor == colorList[4]){
+            color = colorList[4];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T04.jpg")));
+        }
+        if(newColor == colorList[5]){
+            color = colorList[5];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T02.jpg")));
+        }
+        if(newColor == colorList[6]){
+            color = colorList[6];
+            label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T03.jpg")));
+        }
+        c.add(label);
+        layout = l;
+        pane = c;
     }
     
     public Color getColor(){
@@ -112,7 +141,9 @@ public class Tetrimino implements TBProperties
      * @param y
      */
     public void draw(int x, int y){
-       label.setLocation(x,y);
+        layout.removeLayoutComponent(label);
+        layout.putConstraint(SpringLayout.WEST, label, x, SpringLayout.WEST, pane);
+        layout.putConstraint(SpringLayout.NORTH, label, y, SpringLayout.NORTH, pane);
     }
 
     

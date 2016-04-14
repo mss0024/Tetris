@@ -6,8 +6,10 @@
 package block;
 
 
+import java.awt.Container;
 import java.awt.Point;
 import java.awt.Graphics;
+import javax.swing.SpringLayout;
 import main.Grid;
 /**
  *
@@ -20,63 +22,63 @@ public class Block implements TBProperties
     private static Grid grid;
     Point position = null;
     
-    public Block(int shape){
+    public Block(int shape, Container c, SpringLayout layout){
         
         position = new Point(5, 0);
         switch(shape){
             case 0: // S-Block
-                fulcrum = new Tetrimino(colorList[0]);
-                fulcrum.setRight(new Tetrimino(colorList[0]));
-                fulcrum.setDown(new Tetrimino(colorList[0]));
+                fulcrum = new Tetrimino(colorList[0], c, layout);
+                fulcrum.setRight(new Tetrimino(colorList[0], c, layout));
+                fulcrum.setDown(new Tetrimino(colorList[0], c, layout));
                 fulcrum.getDown()
-                        .setLeft(new Tetrimino(colorList[0]));
+                        .setLeft(new Tetrimino(colorList[0], c, layout));
                 whatShape = "S";
                 break;
             case 1: // L-Block
-                fulcrum = new Tetrimino(colorList[1]);
-                fulcrum.setRight(new Tetrimino(colorList[1]));
-                fulcrum.setLeft(new Tetrimino(colorList[1]));
+                fulcrum = new Tetrimino(colorList[1], c, layout);
+                fulcrum.setRight(new Tetrimino(colorList[1], c, layout));
+                fulcrum.setLeft(new Tetrimino(colorList[1], c, layout));
                 fulcrum.getLeft()
-                        .setDown(new Tetrimino(colorList[1]));
+                        .setDown(new Tetrimino(colorList[1], c, layout));
                 whatShape = "L";
                 break;
             case 2: // O-Block
-                fulcrum = new Tetrimino(colorList[2]);
-                fulcrum.setLeft(new Tetrimino(colorList[2]));
-                fulcrum.setDown(new Tetrimino(colorList[2]));
+                fulcrum = new Tetrimino(colorList[2], c, layout);
+                fulcrum.setLeft(new Tetrimino(colorList[2], c, layout));
+                fulcrum.setDown(new Tetrimino(colorList[2], c, layout));
                 fulcrum.getDown()
-                        .setLeft(new Tetrimino(colorList[2]));
+                        .setLeft(new Tetrimino(colorList[2], c, layout));
                 whatShape = "O";
                 break;
             case 3: // T-Block
-                fulcrum = new Tetrimino(colorList[3]);
-                fulcrum.setLeft(new Tetrimino(colorList[3]));
-                fulcrum.setRight(new Tetrimino(colorList[3]));
-                fulcrum.setDown(new Tetrimino(colorList[3]));
+                fulcrum = new Tetrimino(colorList[3], c, layout);
+                fulcrum.setLeft(new Tetrimino(colorList[3], c, layout));
+                fulcrum.setRight(new Tetrimino(colorList[3], c, layout));
+                fulcrum.setDown(new Tetrimino(colorList[3], c, layout));
                 whatShape = "T";
                 break;
             case 4: // Z-Block
-                fulcrum = new Tetrimino(colorList[4]);
-                fulcrum.setLeft(new Tetrimino(colorList[4]));
-                fulcrum.setDown(new Tetrimino(colorList[4]));
+                fulcrum = new Tetrimino(colorList[4], c, layout);
+                fulcrum.setLeft(new Tetrimino(colorList[4], c, layout));
+                fulcrum.setDown(new Tetrimino(colorList[4], c, layout));
                 fulcrum.getDown()
-                        .setRight(new Tetrimino(colorList[4]));
+                        .setRight(new Tetrimino(colorList[4], c, layout));
                 whatShape = "Z";
                 break;
             case 5: // J-Block
-                fulcrum = new Tetrimino(colorList[5]);
-                fulcrum.setLeft(new Tetrimino(colorList[5]));
-                fulcrum.setRight(new Tetrimino(colorList[5]));
+                fulcrum = new Tetrimino(colorList[5], c, layout);
+                fulcrum.setLeft(new Tetrimino(colorList[5], c, layout));
+                fulcrum.setRight(new Tetrimino(colorList[5], c, layout));
                 fulcrum.getRight()
-                        .setDown(new Tetrimino(colorList[5]));
+                        .setDown(new Tetrimino(colorList[5], c, layout));
                 whatShape = "J";
                 break;
             case 6: // I-Block
-                fulcrum = new Tetrimino(colorList[6]);
-                fulcrum.setRight(new Tetrimino(colorList[6]));
-                fulcrum.setLeft(new Tetrimino(colorList[6]));
+                fulcrum = new Tetrimino(colorList[6], c, layout);
+                fulcrum.setRight(new Tetrimino(colorList[6], c, layout));
+                fulcrum.setLeft(new Tetrimino(colorList[6], c, layout));
                 fulcrum.getLeft()
-                        .setLeft(new Tetrimino(colorList[6]));
+                        .setLeft(new Tetrimino(colorList[6], c, layout));
                 whatShape = "I";
                 break;
         }
@@ -140,7 +142,7 @@ public class Block implements TBProperties
      * @param drawFulcrum
      */
     public void draw(Tetrimino drawFulcrum, Point p){
-        drawFulcrum.draw( 113+(25*p.x), 113+(25*p.y));
+        drawFulcrum.draw( 100+(25*p.x), 100+(25*p.y));
         if(drawFulcrum.getUp() != null)
             draw(drawFulcrum.getUp(),new Point(p.x,p.y-1));
         if(drawFulcrum.getLeft() != null)
@@ -159,6 +161,7 @@ public class Block implements TBProperties
      */
     public boolean boundCheck(Tetrimino t, Point p){
         boolean b = true;
+        /*
         if (p.x < 0 || p.x > 9)
             return false;
         if (p.y > 21)
@@ -171,7 +174,7 @@ public class Block implements TBProperties
             b = false;
         if(t.getDown() != null && !boundCheck(t.getDown(), new Point(p.x, p.y + 1)))
             b = false;
-        
+        */
         return b;
     }
     
@@ -184,6 +187,7 @@ public class Block implements TBProperties
      */
     public boolean collisionCheck(Tetrimino t, Point p){
         boolean b = true;
+        /*
         if (grid.getGrid().get(p.y).get(p.x) != null)
             return false;
         if (t.getUp() != null && !collisionCheck(t.getUp(), new Point(p.x, p.y - 1)))
@@ -194,6 +198,7 @@ public class Block implements TBProperties
             b = false;
         if (t.getDown() != null && !collisionCheck(t.getDown(), new Point(p.x, p.y + 1)))
             b = false;
+        */
         return b;
     }
     
@@ -207,22 +212,22 @@ public class Block implements TBProperties
             
             //Move left
             case 0:
-                if(collisionCheck(t, new Point(--position.x, position.y)) && 
-                        boundCheck(t, new Point(--position.x, position.y)))
+                if(collisionCheck(t, new Point(position.x-1, position.y)) && 
+                        boundCheck(t, new Point(position.x-1, position.y)))
                     --position.x;
 
                 break;
             //Move right
             case 1:
-                if(collisionCheck(t, new Point(++position.x, position.y)) && 
-                        boundCheck(t, new Point(++position.x, position.y)))
+                if(collisionCheck(t, new Point(position.x+1, position.y)) && 
+                        boundCheck(t, new Point(position.x+1, position.y)))
                     ++position.x;
                    
                 break;
             //Move down    
             case 2:
-                if(collisionCheck(t, new Point(position.x, ++position.y)) && 
-                        boundCheck(t, new Point(position.x, ++position.y)))
+                if(collisionCheck(t, new Point(position.x, position.y+1)) && 
+                        boundCheck(t, new Point(position.x, position.y+1)))
                     ++position.y;
  
                 break;               
@@ -255,7 +260,7 @@ public class Block implements TBProperties
     
     @Override
     public String toString(){
-        return whatShape;
+        return whatShape + "";
     }
     
 }
