@@ -63,9 +63,14 @@ public class Tetrimino implements TBProperties
             color = colorList[6];
             label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T03.jpg")));
         }
-        c.add(label);
+        //c.add(label);
         layout = l;
         pane = c;
+    }
+    
+    public void destructor(){
+        layout.removeLayoutComponent(label);
+        pane.remove(label);
     }
     
     public Color getColor(){
@@ -149,12 +154,16 @@ public class Tetrimino implements TBProperties
         //remove it form the pane
         pane.remove(label);
         //re-add it to the pane
-        pane.add(label);       
+        if(y>=100)
+            pane.add(label);       
         //put new constraints on
         layout.putConstraint(SpringLayout.WEST, label, x, SpringLayout.WEST, pane);
         layout.putConstraint(SpringLayout.NORTH, label, y, SpringLayout.NORTH, pane);
     }
-
+    
+    public Tetrimino clone(){
+        return new Tetrimino(color, pane, layout);
+    }
     
 }
 
