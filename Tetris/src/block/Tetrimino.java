@@ -15,6 +15,7 @@ import javax.swing.SpringLayout;
  * This class is the Base Tetrimino that makes up all Tetris blocks
  * 
  * @author Tyler
+ * @author Mitch
  */
 public class Tetrimino implements TBProperties
 {
@@ -28,11 +29,12 @@ public class Tetrimino implements TBProperties
     private final int width = 25;
     private final int height = 25;
     private JLabel label = null;
-    private SpringLayout layout;
-    private Container pane;
+    private final SpringLayout layout;
+    private final Container pane;
     
 
     public Tetrimino(Color newColor, Container c, SpringLayout l){
+        //put the correct image with the color
         if(newColor == colorList[0]){
             color = colorList[0];
             label = new JLabel(new ImageIcon(Tetrimino.class.getResource("/images/T06.jpg")));
@@ -141,7 +143,14 @@ public class Tetrimino implements TBProperties
      * @param y
      */
     public void draw(int x, int y){
+        
+        //remove previous constraints
         layout.removeLayoutComponent(label);
+        //remove it form the pane
+        pane.remove(label);
+        //re-add it to the pane
+        pane.add(label);       
+        //put new constraints on
         layout.putConstraint(SpringLayout.WEST, label, x, SpringLayout.WEST, pane);
         layout.putConstraint(SpringLayout.NORTH, label, y, SpringLayout.NORTH, pane);
     }

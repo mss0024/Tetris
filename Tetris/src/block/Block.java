@@ -8,18 +8,18 @@ package block;
 
 import java.awt.Container;
 import java.awt.Point;
-import java.awt.Graphics;
 import javax.swing.SpringLayout;
 import main.Grid;
 /**
  *
  * @author Tyler
+ * @author Mitch
  */
 public class Block implements TBProperties
 {
     protected Tetrimino fulcrum = null;
     private String whatShape;
-    private static Grid grid;
+    private static Grid grid = new Grid();
     Point position = null;
     
     public Block(int shape, Container c, SpringLayout layout){
@@ -137,11 +137,12 @@ public class Block implements TBProperties
     }
     
     /**
-     * Function to draw the block on the GUI
-     * @param g
-     * @param drawFulcrum
+     * Function that calls the Tetriminos draw functions
+     * @param p The current position of the Tetrimino to draw
+     * @param drawFulcrum The current tetrimino to draw
      */
     public void draw(Tetrimino drawFulcrum, Point p){
+        //draw the current tetrimino and then call the rest
         drawFulcrum.draw( 100+(25*p.x), 100+(25*p.y));
         if(drawFulcrum.getUp() != null)
             draw(drawFulcrum.getUp(),new Point(p.x,p.y-1));
@@ -161,7 +162,7 @@ public class Block implements TBProperties
      */
     public boolean boundCheck(Tetrimino t, Point p){
         boolean b = true;
-        /*
+        
         if (p.x < 0 || p.x > 9)
             return false;
         if (p.y > 21)
@@ -174,7 +175,7 @@ public class Block implements TBProperties
             b = false;
         if(t.getDown() != null && !boundCheck(t.getDown(), new Point(p.x, p.y + 1)))
             b = false;
-        */
+        
         return b;
     }
     
@@ -187,7 +188,7 @@ public class Block implements TBProperties
      */
     public boolean collisionCheck(Tetrimino t, Point p){
         boolean b = true;
-        /*
+        
         if (grid.getGrid().get(p.y).get(p.x) != null)
             return false;
         if (t.getUp() != null && !collisionCheck(t.getUp(), new Point(p.x, p.y - 1)))
@@ -198,7 +199,7 @@ public class Block implements TBProperties
             b = false;
         if (t.getDown() != null && !collisionCheck(t.getDown(), new Point(p.x, p.y + 1)))
             b = false;
-        */
+        
         return b;
     }
     
