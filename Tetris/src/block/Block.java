@@ -10,6 +10,7 @@ import java.awt.Container;
 import java.awt.Point;
 import javax.swing.SpringLayout;
 import main.Grid;
+import main.Tetris;
 /**
  *
  * @author Tyler
@@ -20,10 +21,13 @@ public class Block implements TBProperties
     protected Tetrimino fulcrum = null;
     private String whatShape;
     private static Grid grid = new Grid();
-    Point position = null;
+    private Point position = null;
+    private Container pane = null;
+    private SpringLayout lay = null;
     
     public Block(int shape, Container c, SpringLayout layout){
-        
+        pane = c;
+        lay = layout;
         position = new Point(5, 0);
         switch(shape){
             case 0: // S-Block
@@ -85,9 +89,14 @@ public class Block implements TBProperties
         
     }
     
-    /**
     
     
+    public void rotateHelper(Block b){
+        Block temp = b.clone();
+        rotate(temp.getFulcrum());
+        if(boundCheck(temp.getFulcrum(),temp.getPosition()) && collisionCheck(temp.getFulcrum(),temp.getPosition()))
+            rotate(b.getFulcrum());
+    }
     
     /**
      * Rotates the block 90 degrees in a clockwise direction.
@@ -98,6 +107,7 @@ public class Block implements TBProperties
     {
         // MAKE A COPY OF THE BLASCK AND PASS IT OT THIS METHOD TO CHECK AND THEN
         // IF IT IS VALID THEN CALL IT AGASIN ON THE ORIGINAL BLCOK
+        
         Tetrimino temp = rotationFulcrum.getUp();           //setting temp to store a tet
         rotationFulcrum.setUp(rotationFulcrum.getLeft());   //moving the blocks clockwise
         rotationFulcrum.setLeft(rotationFulcrum.getDown());
@@ -143,7 +153,7 @@ public class Block implements TBProperties
      */
     public void draw(Tetrimino drawFulcrum, Point p){
         //draw the current tetrimino and then call the rest
-        drawFulcrum.draw( 100+(25*p.x), 100+(25*p.y));
+        drawFulcrum.draw( 100+(25*p.x), 50+(25*p.y));
         if(drawFulcrum.getUp() != null)
             draw(drawFulcrum.getUp(),new Point(p.x,p.y-1));
         if(drawFulcrum.getLeft() != null)
@@ -188,9 +198,11 @@ public class Block implements TBProperties
      */
     public boolean collisionCheck(Tetrimino t, Point p){
         boolean b = true;
-        
+        if(p.y > 21)
+            return false;
         if (grid.getGrid().get(p.y).get(p.x) != null)
             return false;
+        
         if (t.getUp() != null && !collisionCheck(t.getUp(), new Point(p.x, p.y - 1)))
             b = false;
         if (t.getLeft() != null && !collisionCheck(t.getLeft(), new Point(p.x - 1, p.y)))
@@ -208,7 +220,7 @@ public class Block implements TBProperties
      * @param t     tetrimino we are moving
      * @param dir   direction that we are moving (0: left, 1: right, 2: down)
      */
-    public void movePiece(Tetrimino t, int dir){
+    public boolean movePiece(Tetrimino t, int dir){
         switch (dir){
             
             //Move left
@@ -230,9 +242,48 @@ public class Block implements TBProperties
                 if(collisionCheck(t, new Point(position.x, position.y+1)) && 
                         boundCheck(t, new Point(position.x, position.y+1)))
                     ++position.y;
- 
+                else
+                {
+                    placeTetriminos(fulcrum, position);
+                    int temp = Grid.checkIfRowFull(grid.getGrid());
+                        Tetris tTemp = ((Tetris)pane);
+                    if(temp == 1){
+                        tTemp.numLines = tTemp.numLines + 1;
+                        tTemp.numScore = tTemp.numScore + 10;
+                    }
+                    if(temp == 2){
+                        tTemp.numLines = tTemp.numLines + 2;
+                        tTemp.numScore = tTemp.numScore + 25;
+                    }
+                    if(temp == 3){
+                        tTemp.numLines = tTemp.numLines + 3;
+                        tTemp.numScore = tTemp.numScore + 50;
+                    }
+                    if(temp == 4){
+                        tTemp.numLines = tTemp.numLines + 4;
+                        tTemp.numScore = tTemp.numScore + 100;
+                    }
+                    tTemp.score.setText("Score: " + tTemp.numScore);
+                    tTemp.linesCleared.setText("Lines Clread: " + tTemp.numLines);
+                    grid.toString();
+                    grid.draw();
+                    return true;
+                }
                 break;               
         }
+        return false;
+    }
+    
+    private void placeTetriminos(Tetrimino placeFulcrum, Point p){
+        grid.getGrid().get(p.y).set(p.x, placeFulcrum);
+        if(placeFulcrum.getUp() != null)
+            placeTetriminos(placeFulcrum.getUp(), new Point(p.x,p.y-1));
+        if(placeFulcrum.getLeft() != null)
+            placeTetriminos(placeFulcrum.getLeft(), new Point(p.x-1,p.y));
+        if(placeFulcrum.getDown() != null)
+            placeTetriminos(placeFulcrum.getDown(), new Point(p.x,p.y+1));
+        if(placeFulcrum.getRight() != null)
+            placeTetriminos(placeFulcrum.getRight(), new Point(p.x+1,p.y));
     }
     
     /**
@@ -258,10 +309,42 @@ public class Block implements TBProperties
     public Tetrimino getFulcrum(){
         return fulcrum;
     }
+    private void setFulcrum(Tetrimino newFulcrum){
+        fulcrum = newFulcrum;
+    }
     
+    private void setPosition(Point p){
+        position = p;
+    }
     @Override
     public String toString(){
         return whatShape + "";
     }
+    
+    public Tetrimino cloneTetrimino(Tetrimino cloneFulcrum){
+        Tetrimino temp = cloneFulcrum.clone();
+        if(cloneFulcrum.getUp() != null)
+            temp.setUp(cloneTetrimino(cloneFulcrum.getUp()));
+        if(cloneFulcrum.getLeft() != null)
+            temp.setLeft(cloneTetrimino(cloneFulcrum.getLeft()));
+        if(cloneFulcrum.getDown() != null)
+            temp.setDown(cloneTetrimino(cloneFulcrum.getDown()));
+        if(cloneFulcrum.getRight() != null)
+            temp.setRight(cloneTetrimino(cloneFulcrum.getRight()));
+        return temp;
+    }
+    
+    public boolean gameOver(){
+        return grid.isGameOver();
+    }
+    
+    @Override
+    public Block clone(){
+        Block temp = new Block(0,pane,lay);
+        temp.setFulcrum(cloneTetrimino(fulcrum));
+        temp.setPosition(position);
+        return temp;
+    }
+
     
 }

@@ -47,22 +47,26 @@ public class Grid {
             }
         }    
     }
-
+        
     /**
      * Check to see if the rows of the grid are full
      * If a row is full, then we will call the clearRow function
      * @param grid  2-D Tetrimino Array List we are searching
      */
-    public static void checkIfRowFull(ArrayList<ArrayList<Tetrimino>> grid){
+    public static int checkIfRowFull(ArrayList<ArrayList<Tetrimino>> grid){
+        int i = 0;
         for (int rowNum = 2; rowNum < 22; rowNum++){
             ArrayList<Tetrimino> oneRow = grid.get(rowNum);
             for(int colNum = 0; colNum < 10; colNum++){
                 if(oneRow.get(colNum) == null)
-                    continue;
-                if(colNum == 9 && oneRow.get(colNum) != null)
+                    break;
+                if(colNum == 9 && oneRow.get(colNum) != null){
                     clearRow(rowNum, grid);
+                    ++i;
+                }
             }
         }
+        return i;
     }
 
     /**
@@ -71,6 +75,9 @@ public class Grid {
      * @param grid      grid we are deleting and adding to
      */
     private static void clearRow(int rowNum, ArrayList<ArrayList<Tetrimino>> grid){
+        for(Tetrimino t : grid.get(rowNum)){
+            t.destructor();
+        }
         grid.remove(rowNum);
         ArrayList<Tetrimino> oneRow = new ArrayList<>();
         for(int colNum = 0; colNum < 10; colNum++){
@@ -78,5 +85,39 @@ public class Grid {
         }
         grid.add(0, oneRow);
     }
-
+    
+    public void draw(){
+        for (int i = 0; i < 22; i++){
+            for (int j = 0; j != 10; j++) {
+                if(grid.get(i).get(j)!= null)
+                    grid.get(i).get(j).draw(100+(25*j), 50+(25*i));
+            }
+        } 
+    }
+    
+    public boolean isGameOver(){
+        for(int i=0; i<2; i++){
+            for(Tetrimino t : grid.get(i)){
+                if(t != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    @Override
+    public String toString(){
+        for(ArrayList<Tetrimino> a : grid){
+            for(Tetrimino t : a){
+                if(t!= null)
+                    System.out.print("1 ");
+                else
+                    System.out.print("0 ");
+            }
+            System.out.println();
+        }
+        System.out.println("------------------------------------------------------");
+        return "";
+    }
 }

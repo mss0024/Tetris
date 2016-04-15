@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SpringLayout;
 import block.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -26,6 +28,11 @@ import java.util.Random;
  * @author Mitch
  */
 public class Tetris extends Container{
+    
+    public int numScore = 0;
+    public int numLines = 0;
+    public JLabel score = new JLabel("Score: " + numScore);
+    public JLabel linesCleared = new JLabel("Lines Cleared: " + numLines);
     //image for the background
     Image backGroundImage;
     //random seed for generating blocks
@@ -78,8 +85,6 @@ public class Tetris extends Container{
         this.setLayout(layout);
         //make or components
         JButton quitGame = new JButton("Exit");
-        JLabel score = new JLabel("Score: 0");
-        JLabel linesCleared = new JLabel("Lines Cleared: 0");
         //add them to the pane
         this.add(quitGame);
         this.add(linesCleared);
@@ -112,19 +117,18 @@ public class Tetris extends Container{
         });
         
         this.setVisible(true);
-        
-        
-        //next.draw(this.getGraphics(), next.getFulcrum(), new Point(530,155));
+        //jank
+        Runnable r = new MyThread();
+        Thread thr = new Thread(r);
+        thr.start();
         
         //start game here
         
         //set action lisners somehwere
         
     }
-    
-    
     //does something to get all keyboard input idk what a keyeventdispacter is
-    class MyDispatcher implements KeyEventDispatcher{
+    public class MyDispatcher implements KeyEventDispatcher{
         /**
          * Gets keyboard input and acts off of it.
          * @param e The key that was pressed
@@ -132,6 +136,7 @@ public class Tetris extends Container{
          */
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
+            
             //when a key is pressed down
             if (e.getID() == KeyEvent.KEY_PRESSED) {
             } 
@@ -154,13 +159,18 @@ public class Tetris extends Container{
                     
                 }
                 if(e.getKeyCode() == KeyEvent.VK_UP){//up
-                    current.rotate(current.getFulcrum());
+                    current.rotateHelper(current);
                     current.draw(current.getFulcrum(), current.getPosition());
                     revalidate();
                     repaint();
                 }
                 if(e.getKeyCode() == KeyEvent.VK_DOWN){//down
-                    current.movePiece(current.getFulcrum(), 2);
+                    if(current.movePiece(current.getFulcrum(), 2)){
+                        current = next;
+                        next = new Block(rnd.nextInt(7), Tetris.this, layout);
+                        next.draw(next.getFulcrum(), new Point(13,2));
+                        current.draw(current.getFulcrum(), new Point(5,0));
+                    }
                     current.draw(current.getFulcrum(), current.getPosition());
                     revalidate();
                     repaint();
@@ -173,5 +183,40 @@ public class Tetris extends Container{
             return false;
         }  
    } 
+    public class MyThread implements Runnable{
 
+        @Override
+        public void run() {
+            boolean gameOver = false;
+            while(!gameOver){
+                if(current.movePiece(current.getFulcrum(), 2)){
+                    if(current.gameOver()){
+                        gameOver = true;
+                        Graphics g = Tetris.this.getGraphics();
+                        g.setColor(Color.CYAN);
+                        g.setFont(new Font("TimesRoman", Font.PLAIN, 70));
+                        g.drawString("GAME OVER", 100, 350);
+                        
+                        break;
+                    }
+                    current = next;
+                    next = new Block(rnd.nextInt(7), Tetris.this, layout);
+                    next.draw(next.getFulcrum(), new Point(13,2));
+                    current.draw(current.getFulcrum(), new Point(5,0));
+                }
+                current.draw(current.getFulcrum(), current.getPosition());
+                revalidate();
+                repaint();
+                
+                try{
+                    Thread.sleep(700);
+                }
+                catch(Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        
+    }
 }
