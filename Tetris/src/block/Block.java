@@ -264,7 +264,7 @@ public class Block implements TBProperties
                         tTemp.numScore = tTemp.numScore + 100;
                     }
                     tTemp.score.setText("Score: " + tTemp.numScore);
-                    tTemp.linesCleared.setText("Lines Clread: " + tTemp.numLines);
+                    tTemp.linesCleared.setText("Lines Cleared: " + tTemp.numLines);
                     grid.toString();
                     grid.draw();
                     return true;
