@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 
@@ -63,7 +64,7 @@ public class Driver{
             public void actionPerformed(java.awt.event.ActionEvent ae) {
                 contentPane.setVisible(false);
                 //frame.getContentPane().removeAll();
-                frame.setContentPane(new Tetris(frameInsets));
+                frame.setContentPane(new Tetris(frameInsets, frame, contentPane));
                 //frame.validate();
             }
         });
@@ -76,7 +77,11 @@ public class Driver{
         quitGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent ae) {
-                System.exit(0);
+                Object[] options = {"Yes","No",};
+                int n = JOptionPane.showOptionDialog(frame, "Are you sure?", "Quit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                if (n == 0){//yes back to menu
+                    System.exit(0);
+                }
             }
         });
         
@@ -106,6 +111,7 @@ public class Driver{
         //saying which frame is currently visible
         frame.setVisible(true);
    }
+    
     
     /**
      * @param args the command line arguments

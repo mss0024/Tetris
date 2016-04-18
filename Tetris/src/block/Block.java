@@ -265,7 +265,6 @@ public class Block implements TBProperties
                     }
                     tTemp.score.setText("Score: " + tTemp.numScore);
                     tTemp.linesCleared.setText("Lines Cleared: " + tTemp.numLines);
-                    grid.toString();
                     grid.draw();
                     return true;
                 }
@@ -291,7 +290,7 @@ public class Block implements TBProperties
      * @param t     tetrimino we are moving
      */
     public void dropPiece(Tetrimino t){
-        while(collisionCheck(t, new Point(position.x, ++position.y))){
+        while(collisionCheck(t, new Point(position.x, position.y+1))){
             movePiece(t, 2);
         }
         

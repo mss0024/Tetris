@@ -22,13 +22,18 @@ import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mitch
  */
 public class Tetris extends Container{
-    
+    boolean pause = false;
+    boolean gameOver = false;
     public int numScore = 0;
     public int numLines = 0;
     public JLabel score = new JLabel("Score: " + numScore);
@@ -62,7 +67,7 @@ public class Tetris extends Container{
         this.paintComponents(g);
         
     }
-    public Tetris(Insets in)
+    public Tetris(Insets in, JFrame frame, Container mainMenu)
     {
         /*
         try{
@@ -85,8 +90,10 @@ public class Tetris extends Container{
         this.setLayout(layout);
         //make or components
         JButton quitGame = new JButton("Exit");
+        JButton pauseGame = new JButton("Pause");
         //add them to the pane
         this.add(quitGame);
+        this.add(pauseGame);
         this.add(linesCleared);
         this.add(score);
         //put constraints on our components
@@ -98,29 +105,47 @@ public class Tetris extends Container{
                         
         layout.putConstraint(SpringLayout.NORTH, quitGame, 5, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.EAST, quitGame, -5, SpringLayout.EAST, this);
+        
+        layout.putConstraint(SpringLayout.NORTH, pauseGame, 5, SpringLayout.SOUTH, quitGame);
+        layout.putConstraint(SpringLayout.EAST, pauseGame, 0, SpringLayout.EAST, quitGame);
         //draw the tetris pecies
         next.draw(next.getFulcrum(), new Point(13,2));
         current.draw(current.getFulcrum(), new Point(5,0));
         
         //add action listener to the quit button(currently does something dumb)
-        quitGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent ae) {
-                layout.removeLayoutComponent(quitGame);
-                Tetris.this.remove(quitGame);
-                Tetris.this.add(quitGame);
-                layout.putConstraint(SpringLayout.NORTH, quitGame, 5, SpringLayout.NORTH, Tetris.this);
-                layout.putConstraint(SpringLayout.WEST, quitGame, 5, SpringLayout.WEST, Tetris.this);
-                revalidate();
-                repaint();
-            }
-        });
+        
         
         this.setVisible(true);
         //jank
         Runnable r = new MyThread();
         Thread thr = new Thread(r);
         thr.start();
+        
+        quitGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent ae) {
+                Object[] options = {"Yes","No",};
+                int n = JOptionPane.showOptionDialog(Tetris.this, "Are you sure?", "Quit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                if (n == 0){//yes back to menu
+                    Tetris.this.setVisible(false);
+                    mainMenu.setVisible(true);
+                    frame.setContentPane(mainMenu);
+                }
+            }
+        });
+        pauseGame.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(java.awt.event.ActionEvent ae) {
+               if(!pause){
+                   Tetris.this.pause = true;
+                   thr.suspend();
+               }
+               else{
+                   Tetris.this.pause = false;
+                   thr.resume();
+               }
+           }
+        });
         
         //start game here
         
@@ -136,52 +161,50 @@ public class Tetris extends Container{
          */
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            
-            //when a key is pressed down
-            if (e.getID() == KeyEvent.KEY_PRESSED) {
-            } 
-            //when a key is released
-            else if (e.getID() == KeyEvent.KEY_RELEASED) {
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){//left
-                    //move the piece to the left
-                    current.movePiece(current.getFulcrum(),0);
-                    //redraw the piece
-                    current.draw(current.getFulcrum(), current.getPosition());
-                    //redraw everything
-                    revalidate();
-                    repaint();
-                }
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){//right
-                    current.movePiece(current.getFulcrum(), 1);
-                    current.draw(current.getFulcrum(), current.getPosition());
-                    revalidate();
-                    repaint();
-                    
-                }
-                if(e.getKeyCode() == KeyEvent.VK_UP){//up
-                    current.rotateHelper(current);
-                    current.draw(current.getFulcrum(), current.getPosition());
-                    revalidate();
-                    repaint();
-                }
-                if(e.getKeyCode() == KeyEvent.VK_DOWN){//down
-                    if(current.movePiece(current.getFulcrum(), 2)){
-                        current = next;
-                        next = new Block(rnd.nextInt(7), Tetris.this, layout);
-                        next.draw(next.getFulcrum(), new Point(13,2));
-                        current.draw(current.getFulcrum(), new Point(5,0));
+            if(!gameOver){
+                //when a key is pressed down
+                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                } 
+                //when a key is released
+                else if (e.getID() == KeyEvent.KEY_RELEASED) {
+                    if(e.getKeyCode() == KeyEvent.VK_LEFT){//left
+                        //move the piece to the left
+                        current.movePiece(current.getFulcrum(),0);
+                        //redraw the piece
+                        current.draw(current.getFulcrum(), current.getPosition());
+                        //redraw everything
+                        revalidate();
+                        repaint();
                     }
-                    current.draw(current.getFulcrum(), current.getPosition());
-                    revalidate();
-                    repaint();
+                    if(e.getKeyCode() == KeyEvent.VK_RIGHT){//right
+                        current.movePiece(current.getFulcrum(), 1);
+                        current.draw(current.getFulcrum(), current.getPosition());
+                        revalidate();
+                        repaint();
+
+                    }
+                    if(e.getKeyCode() == KeyEvent.VK_UP){//up
+                        current.rotateHelper(current);
+                        current.draw(current.getFulcrum(), current.getPosition());
+                        revalidate();
+                        repaint();
+                    }
+                    if(e.getKeyCode() == KeyEvent.VK_DOWN){//down
+                        current.dropPiece(current.getFulcrum());
+                        current.draw(current.getFulcrum(), current.getPosition());
+                        revalidate();
+                        repaint();
+                    }
                 }
-            }
-            //when a key is pressed and released.  Only of character input for some ungodly reason
-            else if (e.getID() == KeyEvent.KEY_TYPED) {
-            }
-            //???
+                //when a key is pressed and released.  Only of character input for some ungodly reason
+                else if (e.getID() == KeyEvent.KEY_TYPED) {
+                }
+                //???
             return false;
-        }  
+            }
+        return false;
+        }
+            
    } 
     public class MyThread implements Runnable{
 
@@ -196,7 +219,13 @@ public class Tetris extends Container{
                         g.setColor(Color.CYAN);
                         g.setFont(new Font("TimesRoman", Font.PLAIN, 70));
                         g.drawString("GAME OVER", 100, 350);
-                        
+                        gameOver = true;
+                        try {
+                            Thread.sleep(4000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Tetris.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        System.exit(0);
                         break;
                     }
                     current = next;
