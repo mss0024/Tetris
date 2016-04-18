@@ -8,12 +8,15 @@ package main;
 import javax.swing.SpringLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 
@@ -23,22 +26,34 @@ import javax.swing.JOptionPane;
  * @author Mitch
  */
 public class Driver{
-    
+    static Image backGroundImage;
     private static void createAndShowGUI(){
+        try{
+            Driver.backGroundImage = ImageIO.read(Driver.class.getResource("/images/logo01.jpg"));
+        }
+        catch(Exception e){
+        }
         //creating the window
         //Making a new JFrame and setting the title bar to "Tetris!"
         JFrame frame = new JFrame("Tetris!");
         //setting the action for when the user presses the X in the to right and setting it as closing the JFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        frame.setIconImage(backGroundImage);
+        
         //creating the pane
         //getting the contentPane already in the JFrame
+        JLabel backGround = new JLabel();
+        backGround.setIcon(new ImageIcon(Driver.class.getResource("/images/main04.jpg")));
+        
+        frame.setContentPane(backGround);
+        
         Container contentPane = frame.getContentPane();
         //making a new springLayout
         SpringLayout layout = new SpringLayout();
         //setting the layout to the SpringLayout
         contentPane.setLayout(layout);
-        frame.setSize(new Dimension(550,700));
+        frame.setSize(new Dimension(515,700));
         Insets frameInsets = frame.getInsets();
         int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
         int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
@@ -47,7 +62,7 @@ public class Driver{
         JButton startTetris = new JButton();
         JButton openOptions = new JButton();
         JButton quitGame = new JButton();
-        int buttonWidth = 170;
+        int buttonWidth = 150;
         int buttonHeight = 30;
         
         startTetris.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
@@ -88,7 +103,7 @@ public class Driver{
         
         //putting stuff on the pane and positioning
         contentPane.add(startTetris);
-        contentPane.add(openOptions);
+        //contentPane.add(openOptions);
         contentPane.add(quitGame);
         
         
@@ -112,7 +127,6 @@ public class Driver{
         frame.setVisible(true);
    }
     
-    
     /**
      * @param args the command line arguments
      */
@@ -124,4 +138,9 @@ public class Driver{
             }
         });
     }
+
+    public Driver() {
+        
+    }
+    
 }

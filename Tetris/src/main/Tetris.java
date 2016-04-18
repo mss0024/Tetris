@@ -24,6 +24,8 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,8 +34,8 @@ import javax.swing.JOptionPane;
  * @author Mitch
  */
 public class Tetris extends Container{
-    boolean pause = false;
     boolean gameOver = false;
+    boolean pause = false;
     public int numScore = 0;
     public int numLines = 0;
     public JLabel score = new JLabel("Score: " + numScore);
@@ -55,30 +57,32 @@ public class Tetris extends Container{
      */
     @Override
     public void paint(Graphics g) {
-        //g.drawImage(backGroundImage, 0, 0, null);
+        super.paintComponents(g);
+        g.drawImage(backGroundImage, 0, 0, this);
         //draw the outer rectangles
+        g.setColor(Color.DARK_GRAY);
         g.fillRoundRect(90,90,270,520,20,20);
-        g.fillRoundRect(362,90,125,125,20,20);
-        g.setColor(this.getBackground());
+        g.fillRoundRect(362,90,125,95,20,20);
+        //g.setColor(this.getBackground());
         //draw the inner rectangels
+        g.setColor(Color.BLACK);
         g.fillRect(100,100,250,500);
-        g.fillRect(372,100,105,105);
+        g.fillRect(372,100,105,75);
         //paint all of the buttons and labels ect.
         this.paintComponents(g);
         
     }
     public Tetris(Insets in, JFrame frame, Container mainMenu)
     {
-        /*
+        
         try{
-            backGroundImage = ImageIO.read(new File("images\\main04.jpg"));
+            backGroundImage = ImageIO.read(getClass().getResource("PlayFieldBackGround01.jpg"));
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
             System.out.println("Fail");
         }
-        */
         //get the current keyboard manager.
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         //add our dispacher to the manager
@@ -89,25 +93,33 @@ public class Tetris extends Container{
         //set the layout to the spring layout
         this.setLayout(layout);
         //make or components
-        JButton quitGame = new JButton("Exit");
-        JButton pauseGame = new JButton("Pause");
+        JButton quitGame = new JButton();
+        JButton pauseGame = new JButton();
+        int buttonHeight = 25;
+        int buttonWidth = 75;
+        quitGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        pauseGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        
+        quitGame.setIcon(new ImageIcon(Tetris.class.getResource("/images/ExitPlay.jpg")));
+        pauseGame.setIcon(new ImageIcon(Tetris.class.getResource("/images/PausePlay.jpg")));
         //add them to the pane
         this.add(quitGame);
         this.add(pauseGame);
         this.add(linesCleared);
         this.add(score);
         //put constraints on our components
-        layout.putConstraint(SpringLayout.NORTH, score, 600, SpringLayout.NORTH, this);
-        layout.putConstraint(SpringLayout.WEST, score, 370, SpringLayout.WEST, this);
-        
-        layout.putConstraint(SpringLayout.WEST, linesCleared, 0, SpringLayout.WEST, score);
-        layout.putConstraint(SpringLayout.SOUTH, linesCleared, -10, SpringLayout.NORTH, score);
                         
-        layout.putConstraint(SpringLayout.NORTH, quitGame, 5, SpringLayout.NORTH, this);
-        layout.putConstraint(SpringLayout.EAST, quitGame, -5, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.NORTH, quitGame, 200, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.EAST, quitGame, -55, SpringLayout.EAST, this);
         
         layout.putConstraint(SpringLayout.NORTH, pauseGame, 5, SpringLayout.SOUTH, quitGame);
         layout.putConstraint(SpringLayout.EAST, pauseGame, 0, SpringLayout.EAST, quitGame);
+        
+        layout.putConstraint(SpringLayout.NORTH, linesCleared, 5, SpringLayout.SOUTH, pauseGame);
+        layout.putConstraint(SpringLayout.WEST, linesCleared, 0, SpringLayout.WEST, pauseGame);
+        
+        layout.putConstraint(SpringLayout.NORTH, score, 5, SpringLayout.SOUTH, linesCleared);
+        layout.putConstraint(SpringLayout.WEST, score, 0, SpringLayout.WEST, pauseGame);
         //draw the tetris pecies
         next.draw(next.getFulcrum(), new Point(13,2));
         current.draw(current.getFulcrum(), new Point(5,0));
@@ -161,8 +173,9 @@ public class Tetris extends Container{
          */
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            if(!gameOver){
-                //when a key is pressed down
+            //when a key is pressed down
+            if(!gameOver)
+            {
                 if (e.getID() == KeyEvent.KEY_PRESSED) {
                 } 
                 //when a key is released
@@ -204,22 +217,19 @@ public class Tetris extends Container{
             }
         return false;
         }
-            
    } 
     public class MyThread implements Runnable{
 
         @Override
         public void run() {
-            boolean gameOver = false;
-            while(!gameOver){
+            while(true){
                 if(current.movePiece(current.getFulcrum(), 2)){
                     if(current.gameOver()){
                         gameOver = true;
                         Graphics g = Tetris.this.getGraphics();
                         g.setColor(Color.CYAN);
                         g.setFont(new Font("TimesRoman", Font.PLAIN, 70));
-                        g.drawString("GAME OVER", 100, 350);
-                        gameOver = true;
+                        g.drawString("GAME OVER", 50, 350);
                         try {
                             Thread.sleep(4000);
                         } catch (InterruptedException ex) {
