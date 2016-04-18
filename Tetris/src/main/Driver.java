@@ -109,7 +109,7 @@ public class Driver{
         
         ArrayList<JButton> menuButtons = new ArrayList();
         menuButtons.add(startTetris);
-        menuButtons.add(openOptions);
+        //menuButtons.add(openOptions);
         menuButtons.add(quitGame);
         //this statement basically says we are going to put the west(left) side of the startTetris object
         // 100 pixels away from the west(left) side of the contentPane

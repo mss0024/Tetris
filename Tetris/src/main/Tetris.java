@@ -68,6 +68,14 @@ public class Tetris extends Container{
         g.setColor(Color.BLACK);
         g.fillRect(100,100,250,500);
         g.fillRect(372,100,105,75);
+        g.setColor(new Color(255,255,255));
+        for(int i = 1; i<10; i++){
+            g.drawLine(100+(i*25), 100, 100+(i*25), 599);
+        }
+        for(int i = 1; i<20; i++){
+            g.drawLine(100, 100+(i*25), 349, 100+(i*25));
+        }
+        
         //paint all of the buttons and labels ect.
         this.paintComponents(g);
         
