@@ -21,7 +21,7 @@ public class Block implements TBProperties
 {
     protected Tetrimino fulcrum = null; // Tetrimino we rotate around
     private String whatShape; // Store the shape of the Block
-    private static Grid grid = new Grid(); // Reference to the grid we are storing the blocks/tetriminos in
+    public static Grid grid = new Grid(); // Reference to the grid we are storing the blocks/tetriminos in
     private Point position = null; // Position of the fulcrum piece relative to the grid
     private Container pane = null;
     private SpringLayout lay = null;

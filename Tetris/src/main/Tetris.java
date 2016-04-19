@@ -89,7 +89,8 @@ public class Tetris extends Container{
      */
     public Tetris(Insets in, JFrame frame, Container mainMenu)
     {
-        
+        current.grid = new Grid();
+        next.grid = current.grid;
         try{
             backGroundImage = ImageIO.read(getClass().getResource("/images/PlayFieldBackGround01.jpg"));
         }
@@ -110,6 +111,8 @@ public class Tetris extends Container{
         //make or components
         JButton quitGame = new JButton();
         JButton pauseGame = new JButton();
+       
+        
         int buttonHeight = 25;
         int buttonWidth = 75;
         quitGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
