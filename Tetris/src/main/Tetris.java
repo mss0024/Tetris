@@ -83,21 +83,21 @@ public class Tetris extends Container{
     
     /**
      * Constructor for the Tetris Class.
-     * @param in
-     * @param frame
-     * @param mainMenu 
+     * @param in insets of the frame to make the new container the correct size.
+     * @param frame the frame that we originally came from.  Used to for going back to main menu.
+     * @param mainMenu The container that is the main menu.  Used for going back to main menu.
      */
     public Tetris(Insets in, JFrame frame, Container mainMenu)
     {
+        //reset the grid if the user quit and came back
         current.grid = new Grid();
         next.grid = current.grid;
+        //getting the background image
         try{
             backGroundImage = ImageIO.read(getClass().getResource("/images/PlayFieldBackGround01.jpg"));
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Fail");
         }
         //get the current keyboard manager.
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -146,12 +146,15 @@ public class Tetris extends Container{
         
         
         this.setVisible(true);
-        //jank
         Runnable r = new MyThread();
         Thread thr = new Thread(r);
         thr.start();
         
         quitGame.addActionListener(new ActionListener() {
+            /**
+             * Ask the user if they want to quit the game.
+             * @param ae The action event.
+             */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent ae) {
                 Object[] options = {"Yes","No",};
@@ -164,6 +167,10 @@ public class Tetris extends Container{
             }
         });
         pauseGame.addActionListener(new ActionListener() {
+            /**
+             * Pauses the game.
+             * @param ae The action event
+             */
            @Override
            public void actionPerformed(java.awt.event.ActionEvent ae) {
                if(!pause){
@@ -187,7 +194,7 @@ public class Tetris extends Container{
         /**
          * Gets keyboard input and acts off of it.
          * @param e The key that was pressed
-         * @return 
+         * @return ???
          */
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
@@ -235,33 +242,47 @@ public class Tetris extends Container{
             }
         return false;
         }
-   } 
+    } 
     public class MyThread implements Runnable{
-
+        /**
+         * The function that is executed when the thread is started.  Turns off the key listeners and puts the game over message to the screen and then exits the game if the player loses.
+         * Otherwise shifts the blocks(next to current and new next) and then redraws the screen.  Also moves the block down when necessary.
+         */
         @Override
         public void run() {
             while(true){
+                //attempt to mvoe the peice down
                 if(current.movePiece(current.getFulcrum(), 2)){
+                    //if the user lost the game because the peice moved
                     if(current.gameOver()){
+                        //set game over flag to indicate user lost
                         gameOver = true;
+                        //get the current graphics
                         Graphics g = Tetris.this.getGraphics();
+                        //inform the user of their failure
                         g.setColor(Color.CYAN);
                         g.setFont(new Font("TimesRoman", Font.PLAIN, 70));
                         g.drawString("GAME OVER", 50, 350);
                         try {
+                            //wait 4 seconds
                             Thread.sleep(4000);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Tetris.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        //exit
                         System.exit(0);
                         break;
                     }
+                    //if the user didnt lose shift blocks and make a new one
                     current = next;
                     next = new Block(rnd.nextInt(7), Tetris.this, layout);
+                    //draw the new blocks
                     next.draw(next.getFulcrum(), new Point(13,2));
                     current.draw(current.getFulcrum(), new Point(5,0));
                 }
+                
                 current.draw(current.getFulcrum(), current.getPosition());
+                //reapint
                 revalidate();
                 repaint();
                 

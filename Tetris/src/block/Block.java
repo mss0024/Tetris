@@ -28,9 +28,9 @@ public class Block implements TBProperties
     
     /**
      * Constructor for the Block
-     * @param shape     //Shape of the Block
-     * @param c
-     * @param layout 
+     * @param shape What the shape of the block will be.
+     * @param c What the color of the block will be.
+     * @param layout The layout that will be used to place the block.
      */
     public Block(int shape, Container c, SpringLayout layout){
         pane = c;
@@ -162,22 +162,27 @@ public class Block implements TBProperties
      * @return true if still in grid, false otherwise
      */
     public boolean boundCheck(Tetrimino t, Point p){
-        boolean b = true;
-        
-        if (p.x < 0 || p.x > 9)
+        try{
+            boolean b = true;
+
+            if (p.x < 0 || p.x > 9)
+                return false;
+            if (p.y > 21)
+                return false;
+            if(t.getUp() != null && !boundCheck(t.getUp(),new Point(p.x,p.y-1)))
+                b = false;
+            if(t.getRight() != null && !boundCheck(t.getRight(), new Point(p.x + 1, p.y)))
+                b = false;
+            if(t.getLeft() != null && !boundCheck(t.getLeft(), new Point(p.x - 1, p.y)))
+                b = false;
+            if(t.getDown() != null && !boundCheck(t.getDown(), new Point(p.x, p.y + 1)))
+                b = false;
+
+            return b;
+        }
+        catch(Exception e){
             return false;
-        if (p.y > 21)
-            return false;
-        if(t.getUp() != null && !boundCheck(t.getUp(),new Point(p.x,p.y-1)))
-            b = false;
-        if(t.getRight() != null && !boundCheck(t.getRight(), new Point(p.x + 1, p.y)))
-            b = false;
-        if(t.getLeft() != null && !boundCheck(t.getLeft(), new Point(p.x - 1, p.y)))
-            b = false;
-        if(t.getDown() != null && !boundCheck(t.getDown(), new Point(p.x, p.y + 1)))
-            b = false;
-        
-        return b;
+        }
     }
     
     /**
@@ -188,22 +193,27 @@ public class Block implements TBProperties
      * 
      */
     public boolean collisionCheck(Tetrimino t, Point p){
-        boolean b = true;
-        if(p.y > 21)
+        try{
+            boolean b = true;
+            if(p.y > 21)
+                return false;
+            if (grid.getGrid().get(p.y).get(p.x) != null)
+                return false;
+
+            if (t.getUp() != null && !collisionCheck(t.getUp(), new Point(p.x, p.y - 1)))
+                b = false;
+            if (t.getLeft() != null && !collisionCheck(t.getLeft(), new Point(p.x - 1, p.y)))
+                b = false;
+            if (t.getRight() != null && !collisionCheck(t.getRight(), new Point(p.x + 1, p.y)))
+                b = false;
+            if (t.getDown() != null && !collisionCheck(t.getDown(), new Point(p.x, p.y + 1)))
+                b = false;
+
+            return b;
+        }
+        catch(Exception e){
             return false;
-        if (grid.getGrid().get(p.y).get(p.x) != null)
-            return false;
-        
-        if (t.getUp() != null && !collisionCheck(t.getUp(), new Point(p.x, p.y - 1)))
-            b = false;
-        if (t.getLeft() != null && !collisionCheck(t.getLeft(), new Point(p.x - 1, p.y)))
-            b = false;
-        if (t.getRight() != null && !collisionCheck(t.getRight(), new Point(p.x + 1, p.y)))
-            b = false;
-        if (t.getDown() != null && !collisionCheck(t.getDown(), new Point(p.x, p.y + 1)))
-            b = false;
-        
-        return b;
+        }
     }
     
     /**
@@ -294,16 +304,21 @@ public class Block implements TBProperties
         
     }
     
-    public static void main(String [] args){
-                
-    }
-    
     /**
      * Getter for the position
      * @return  The position variable
      */
     public Point getPosition(){
         return position;
+    }
+    
+    /**
+     * Check to see if the game is over.
+     * Calls the gameOver method from the Grid class to see if the game is over.
+     * @return True if the game is over
+     */
+    public boolean gameOver(){
+        return grid.isGameOver();
     }
     
     /**
@@ -329,14 +344,7 @@ public class Block implements TBProperties
     private void setPosition(Point p){
         position = p;
     }
-    
-    @Override
-    /**
-     * Used for debugging purposes
-     */
-    public String toString(){
-        return whatShape + "";
-    }
+           
     
     /**
      * Function to clone the relationships between the tetriminos of a block
@@ -357,25 +365,23 @@ public class Block implements TBProperties
     }
     
     /**
-     * Check to see if the game is over.
-     * Calls the gameOver method from the Grid class to see if the game is over.
-     * @return 
-     */
-    public boolean gameOver(){
-        return grid.isGameOver();
-    }
-    
-    @Override
-    /**
      * Method to clone a block.
      * Used primarily for creating a block to pretend rotate.
      */
+    @Override
     public Block clone(){
         Block temp = new Block(0,pane,lay);
         temp.setFulcrum(cloneTetrimino(fulcrum));
         temp.setPosition(position);
         return temp;
     }
-
+    
+    @Override
+    /**
+     * Used for debugging purposes
+     */
+    public String toString(){
+        return whatShape + "";
+    }
     
 }

@@ -34,8 +34,8 @@ public class Tetrimino implements TBProperties
     /**
      * Constructor for Tetrimino
      * @param newColor  color of the Tetrimino
-     * @param c
-     * @param l 
+     * @param c The container the Tetrimino will be on.
+     * @param l The layout that will palce the tetrimino.
      */
     public Tetrimino(Color newColor, Container c, SpringLayout l){
         //put the correct image with the color
@@ -80,78 +80,6 @@ public class Tetrimino implements TBProperties
         pane.remove(label);
     }
     
-    /**
-     * Getter for the color.
-     * @return the color
-     */
-    public Color getColor(){
-        return color;
-    }
-    
-    /**
-     * Gets the Tetrimino to the left of this
-     * @return The left Tetrimino
-     */
-    public Tetrimino getLeft()
-    {
-        return left;
-    }
-    /**
-     * Gets the Tetrimino to the right of this
-     * @return The right Tetrimino
-     */
-    public Tetrimino getRight()
-    {
-        return right;
-    }
-    /**
-     * Gets the Tetrimino to above of this
-     * @return The Tetrimino above
-     */
-    public Tetrimino getUp()
-    {
-        return up;
-    }
-    /**
-     * Gets the Tetrimino
-     * @return The Tetrimino below
-     */
-    public Tetrimino getDown()
-    {
-        return down;
-    }
-    /**
-     * Sets the Tetrimino to the left of this
-     * @param newLeft The Tetrimino to be set to left
-     */
-    public void setLeft(Tetrimino newLeft)
-    {
-        left = newLeft;
-    }
-    /**
-     * Sets the Tetrimino to the Right of this
-     * @param newRight The Tetrimino to be set to right
-     */
-    public void setRight(Tetrimino newRight)
-    {
-        right = newRight;
-    }
-    /**
-     * Sets the Tetrimino above this
-     * @param newUp The Tetrimino to be set to up
-     */
-    public void setUp(Tetrimino newUp)
-    {
-        up = newUp;
-    }
-    /**
-     * Sets the Tetrimino below of this
-     * @param newDown The Tetrimino to be set to down
-     */
-    public void setDown(Tetrimino newDown)
-    {
-        down = newDown;
-    }
     
     /**
      * Function to draw the individual Tetrimino
@@ -174,11 +102,78 @@ public class Tetrimino implements TBProperties
     
     /**
      * Function to clone the Tetrimino
-     * @return 
+     * @return A clone of the Tetrimino
      */
     public Tetrimino clone(){
         return new Tetrimino(color, pane, layout);
     }
+    
+    
+    /**
+     * Getter for the color.
+     * @return the color
+     */
+    public Color getColor(){
+        return color;
+    }
+    
+    /**
+     * Gets the Tetrimino to the left of this
+     * @return The left Tetrimino
+     */
+    public Tetrimino getLeft() {
+        return left;
+    }
+    /**
+     * Gets the Tetrimino to the right of this
+     * @return The right Tetrimino
+     */
+    public Tetrimino getRight() {
+        return right;
+    }
+    /**
+     * Gets the Tetrimino to above of this
+     * @return The Tetrimino above
+     */
+    public Tetrimino getUp() {
+        return up;
+    }
+    /**
+     * Gets the Tetrimino
+     * @return The Tetrimino below
+     */
+    public Tetrimino getDown() {
+        return down;
+    }
+    /**
+     * Sets the Tetrimino to the left of this
+     * @param newLeft The Tetrimino to be set to left
+     */
+    public void setLeft(Tetrimino newLeft) {
+        left = newLeft;
+    }
+    /**
+     * Sets the Tetrimino to the Right of this
+     * @param newRight The Tetrimino to be set to right
+     */
+    public void setRight(Tetrimino newRight) {
+        right = newRight;
+    }
+    /**
+     * Sets the Tetrimino above this
+     * @param newUp The Tetrimino to be set to up
+     */
+    public void setUp(Tetrimino newUp) {
+        up = newUp;
+    }
+    /**
+     * Sets the Tetrimino below of this
+     * @param newDown The Tetrimino to be set to down
+     */
+    public void setDown(Tetrimino newDown) {
+        down = newDown;
+    }
+    
     
 }
 

@@ -29,6 +29,9 @@ import javax.swing.JOptionPane;
  */
 public class Driver{
     static Image backGroundImage;
+    /**
+     * Function that creates all of the main menu gui and add all of the action listeners.
+     */
     private static void createAndShowGUI(){
         try{
             Driver.backGroundImage = ImageIO.read(Driver.class.getResource("/images/logo01.jpg"));
@@ -42,7 +45,7 @@ public class Driver{
         frame.setResizable(false);
         //setting the action for when the user presses the X in the to right and setting it as closing the JFr.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        //setting the backgournd
         frame.setIconImage(backGroundImage);
         
         //creating the pane
