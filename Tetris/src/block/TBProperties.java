@@ -9,9 +9,9 @@ package block;
 import java.awt.Color;
 /**
  * This is an interface for a few variables that should be shared across
- * the various Tetris classes
- * Includes three variables for the color of a tetrimino, the direction a 
- * tetrimino should go, and the shape of the tetris block
+ * the various Tetris classes.
+ * Includes three variables for the color of a Tetrimino, the direction a 
+ * Tetrimino should go, and the shape of the Tetris block
  * @author Tyler
  */
 public interface TBProperties {
@@ -19,7 +19,7 @@ public interface TBProperties {
     // array for the Colors of the Tetriminos
     public static final Color[] colorList=
     {
-     new Color(255, 99, 71), //Tomato Red  S-Block
+     new Color(255, 99, 71), //TOMATO_RED  S-Block
      new Color(255, 215, 0), //GOLD        L-Block
      new Color(173, 255, 47), //GREEN_YELLOW O-Block
      new Color(32, 178, 170), //SEA_GREEN  T-Block

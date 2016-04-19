@@ -12,27 +12,31 @@ import javax.swing.JLabel;
 import javax.swing.SpringLayout;
 
 /**
- * This class is the Base Tetrimino that makes up all Tetris blocks
- * 
+ * This class is the Base Tetrimino that makes up all Tetris blocks.
+ * The backbone of the entire program
  * @author Tyler
  * @author Mitch
  */
 public class Tetrimino implements TBProperties
 {
 
-    
     private Tetrimino left = null;      // Tetrimino to the left
     private Tetrimino right = null;     // Tetrimino to the right
     private Tetrimino up = null;        // Tetrimino above
     private Tetrimino down = null;      // Tetrimino below
     private Color color = null;         // Color of Tetrimino 
-    private final int width = 25;
-    private final int height = 25;
-    private JLabel label = null;
+    private final int width = 25;       // pixel width of Tetrimino
+    private final int height = 25;      // pixel height of Tetrimino
+    private JLabel label = null;        
     private final SpringLayout layout;
     private final Container pane;
     
-
+    /**
+     * Constructor for Tetrimino
+     * @param newColor  color of the Tetrimino
+     * @param c
+     * @param l 
+     */
     public Tetrimino(Color newColor, Container c, SpringLayout l){
         //put the correct image with the color
         if(newColor == colorList[0]){
@@ -68,14 +72,22 @@ public class Tetrimino implements TBProperties
         pane = c;
     }
     
+    /**
+     * Function to get rid of the Tetrimino from the GUI
+     */
     public void destructor(){
         layout.removeLayoutComponent(label);
         pane.remove(label);
     }
     
+    /**
+     * Getter for the color.
+     * @return the color
+     */
     public Color getColor(){
         return color;
     }
+    
     /**
      * Gets the Tetrimino to the left of this
      * @return The left Tetrimino
@@ -143,9 +155,8 @@ public class Tetrimino implements TBProperties
     
     /**
      * Function to draw the individual Tetrimino
-     * Not sure what to do with this yet...
-     * @param x
-     * @param y
+     * @param x  x position
+     * @param y  y position
      */
     public void draw(int x, int y){
         
@@ -161,6 +172,10 @@ public class Tetrimino implements TBProperties
         layout.putConstraint(SpringLayout.NORTH, label, y, SpringLayout.NORTH, pane);
     }
     
+    /**
+     * Function to clone the Tetrimino
+     * @return 
+     */
     public Tetrimino clone(){
         return new Tetrimino(color, pane, layout);
     }

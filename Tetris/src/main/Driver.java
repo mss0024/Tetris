@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,7 +22,9 @@ import javax.swing.JOptionPane;
 
 
 /**
- *
+ * The Driver for the Tetris Application.
+ * Running this file will begin the Tetris game.
+ * 
  * @author Mitch
  */
 public class Driver{
@@ -36,7 +38,9 @@ public class Driver{
         //creating the window
         //Making a new JFrame and setting the title bar to "Tetris!"
         JFrame frame = new JFrame("Tetris!");
-        //setting the action for when the user presses the X in the to right and setting it as closing the JFrame
+        //Make non-resizable
+        frame.setResizable(false);
+        //setting the action for when the user presses the X in the to right and setting it as closing the JFr.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         frame.setIconImage(backGroundImage);
@@ -53,7 +57,7 @@ public class Driver{
         SpringLayout layout = new SpringLayout();
         //setting the layout to the SpringLayout
         contentPane.setLayout(layout);
-        frame.setSize(new Dimension(515,700));
+        frame.setSize(new Dimension(500,700));
         Insets frameInsets = frame.getInsets();
         int paneHeight = frame.getHeight() - frameInsets.top - frameInsets.bottom;
         int paneWidth = frame.getWidth() - frameInsets.left - frameInsets.right;
@@ -128,6 +132,7 @@ public class Driver{
    }
     
     /**
+     * Main method to begin the game.
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -139,6 +144,10 @@ public class Driver{
         });
     }
 
+    /**
+     * No-args constructor.
+     * We feel more comfortable having one than relying on Java to create a default constructor.
+     */
     public Driver() {
         
     }

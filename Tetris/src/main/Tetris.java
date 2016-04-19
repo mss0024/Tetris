@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package main;
-
+// So many imports...
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -30,7 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * 
  * @author Mitch
  */
 public class Tetris extends Container{
@@ -80,11 +80,18 @@ public class Tetris extends Container{
         this.paintComponents(g);
         
     }
+    
+    /**
+     * Constructor for the Tetris Class.
+     * @param in
+     * @param frame
+     * @param mainMenu 
+     */
     public Tetris(Insets in, JFrame frame, Container mainMenu)
     {
         
         try{
-            backGroundImage = ImageIO.read(getClass().getResource("PlayFieldBackGround01.jpg"));
+            backGroundImage = ImageIO.read(getClass().getResource("/images/PlayFieldBackGround01.jpg"));
         }
         catch(Exception e)
         {

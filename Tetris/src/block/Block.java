@@ -12,19 +12,26 @@ import javax.swing.SpringLayout;
 import main.Grid;
 import main.Tetris;
 /**
- *
+ * Block is the shipping crate for Tetriminos for their descent through the Grid.
+ * Block allows the Tetriminos to be manipulated as a group rather than individually.
  * @author Tyler
  * @author Mitch
  */
 public class Block implements TBProperties
 {
-    protected Tetrimino fulcrum = null;
-    private String whatShape;
-    private static Grid grid = new Grid();
-    private Point position = null;
+    protected Tetrimino fulcrum = null; // Tetrimino we rotate around
+    private String whatShape; // Store the shape of the Block
+    private static Grid grid = new Grid(); // Reference to the grid we are storing the blocks/tetriminos in
+    private Point position = null; // Position of the fulcrum piece relative to the grid
     private Container pane = null;
     private SpringLayout lay = null;
     
+    /**
+     * Constructor for the Block
+     * @param shape     //Shape of the Block
+     * @param c
+     * @param layout 
+     */
     public Block(int shape, Container c, SpringLayout layout){
         pane = c;
         lay = layout;
@@ -90,8 +97,14 @@ public class Block implements TBProperties
     }
     
     
-    
+    /**
+     * Helper function for rotation.
+     * Makes sure that the Block is capable of being rotated before actually rotating it
+     * @param b     The block we are wanting to rotate.
+     */
     public void rotateHelper(Block b){
+        
+        //Make and rotate a clone to make sure we can rotate the block.
         Block temp = b.clone();
         rotate(temp.getFulcrum());
         if(boundCheck(temp.getFulcrum(),temp.getPosition()) && collisionCheck(temp.getFulcrum(),temp.getPosition()))
@@ -123,29 +136,7 @@ public class Block implements TBProperties
             rotate(rotationFulcrum.getRight());
         
     }
-    
-    /**
-     * Function to loop through the block placement
-     */
-    public void update(){
         
-        //loop to go through block placement
-        
-            //thread sleep for x seconds
-            //to allow user to move left or right or down
-            //if the user wants to move left or right, run a collision and
-            //bounds check recursively first
-            
-            //after thread is done sleeping, check for a collision downwards
-            //if no collision, move block downwards and resume loop
-            //if there is a collision, end the block movement and the loop,
-            //get new
-        
-        
-        
-        
-    }
-    
     /**
      * Function that calls the Tetriminos draw functions
      * @param p The current position of the Tetrimino to draw
@@ -193,7 +184,7 @@ public class Block implements TBProperties
      * Check to see if the tetrimino will collide with another tetrimino
      * @param t    Tetrimino we are checking for pre-existing tetriminos in grid
      * @param p    Point we are looking at in the grid  
-     * @return 
+     * @return      true if no collision, false if collision
      * 
      */
     public boolean collisionCheck(Tetrimino t, Point p){
@@ -273,6 +264,11 @@ public class Block implements TBProperties
         return false;
     }
     
+    /**
+     * Recursively places the Tetriminos of the Block into the Grid variable
+     * @param placeFulcrum  //the tetrimino that we are placing
+     * @param p             //the point in the grid we are placing the tetrimino
+     */
     private void placeTetriminos(Tetrimino placeFulcrum, Point p){
         grid.getGrid().get(p.y).set(p.x, placeFulcrum);
         if(placeFulcrum.getUp() != null)
@@ -287,7 +283,7 @@ public class Block implements TBProperties
     
     /**
      * Move the tetrimino straight down until there is a collision
-     * @param t     tetrimino we are moving
+     * @param t     tetrimino we are dropping
      */
     public void dropPiece(Tetrimino t){
         while(collisionCheck(t, new Point(position.x, position.y+1))){
@@ -301,25 +297,52 @@ public class Block implements TBProperties
     public static void main(String [] args){
                 
     }
+    
+    /**
+     * Getter for the position
+     * @return  The position variable
+     */
     public Point getPosition(){
         return position;
     }
     
+    /**
+     * Getter for the fulcrum
+     * @return  The fulcrum
+     */
     public Tetrimino getFulcrum(){
         return fulcrum;
     }
+    
+    /**
+     * Setter for the fulcrum
+     * @param newFulcrum Value for the fulcrum
+     */
     private void setFulcrum(Tetrimino newFulcrum){
         fulcrum = newFulcrum;
     }
     
+    /**
+     * Setter for the position
+     * @param p     New position
+     */
     private void setPosition(Point p){
         position = p;
     }
+    
     @Override
+    /**
+     * Used for debugging purposes
+     */
     public String toString(){
         return whatShape + "";
     }
     
+    /**
+     * Function to clone the relationships between the tetriminos of a block
+     * @param cloneFulcrum
+     * @return the clone
+     */
     public Tetrimino cloneTetrimino(Tetrimino cloneFulcrum){
         Tetrimino temp = cloneFulcrum.clone();
         if(cloneFulcrum.getUp() != null)
@@ -333,11 +356,20 @@ public class Block implements TBProperties
         return temp;
     }
     
+    /**
+     * Check to see if the game is over.
+     * Calls the gameOver method from the Grid class to see if the game is over.
+     * @return 
+     */
     public boolean gameOver(){
         return grid.isGameOver();
     }
     
     @Override
+    /**
+     * Method to clone a block.
+     * Used primarily for creating a block to pretend rotate.
+     */
     public Block clone(){
         Block temp = new Block(0,pane,lay);
         temp.setFulcrum(cloneTetrimino(fulcrum));
