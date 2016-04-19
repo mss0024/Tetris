@@ -22,8 +22,7 @@ import javax.swing.JOptionPane;
 
 
 /**
- * The Driver for the Tetris Application.
- * Running this file will begin the Tetris game.
+ * Drive for the game of tetris.  This class creates the intial program and gui of the main menu.
  * 
  * @author Mitch
  */

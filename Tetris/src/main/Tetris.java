@@ -30,7 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- * 
+ * This class creates the GUI components of the game and handles the running components.
  * @author Mitch
  */
 public class Tetris extends Container{
@@ -190,6 +190,10 @@ public class Tetris extends Container{
         
     }
     //does something to get all keyboard input idk what a keyeventdispacter is
+    /**
+     * Does something with the keylisteners and crap to make stuff work.
+     * @author some dude on the internet
+     */
     public class MyDispatcher implements KeyEventDispatcher{
         /**
          * Gets keyboard input and acts off of it.
@@ -243,6 +247,10 @@ public class Tetris extends Container{
         return false;
         }
     } 
+    /**
+     * Creates a thread that updates every 700 milliseconds and checks to see if the game is over.
+     * @author Mitch
+     */
     public class MyThread implements Runnable{
         /**
          * The function that is executed when the thread is started.  Turns off the key listeners and puts the game over message to the screen and then exits the game if the player loses.
